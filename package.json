@@ -1,0 +1,15 @@
+{
+  "name": "surdu.me",
+  "version": "1.0.0",
+  "description": "My really blogging website",
+  "scripts": {
+    "start": "jekyll serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/surdu/surdu.github.io.git"
+  },
+  "author": "Surdu Nicolae",
+  "license": "MIT",
+  "homepage": "https://surdu.me"
+}

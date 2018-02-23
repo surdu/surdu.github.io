@@ -1,0 +1,22 @@
+name: Surdu
+description: really blogging stuff about me ...
+meta_description: "Really blogging stuff about Nicu Surdu ..."
+
+markdown: kramdown
+highlighter: pygments
+logo: false
+paginate: 15
+baseurl: /
+domain_name: 'http://surdu.me'
+google_analytics: 'UA-XXXXXXXX-X'
+plugins: [jekyll-paginate]
+
+# Details for the RSS feed generator
+url:            'http://surdu.me'
+author:         'Nicu Surdu'
+
+
+exclude: [
+"package.json",
+"README.md"
+]

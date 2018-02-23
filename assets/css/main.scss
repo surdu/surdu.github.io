@@ -1,0 +1,32 @@
+---
+# Let's add a comment to make this file sass-y.
+# Change this file for any custom CSS.
+---
+
+/* We need to add display:inline in order to align the '>>' of the 'read more' link */
+.post-excerpt p {
+	display:inline;
+}
+
+// Import partials from `sass_dir` (defaults to `_sass`)
+@import
+	"syntax"
+;
+
+.socialEntry {
+	margin-bottom: 10px;
+}
+
+	.socialEntry a {
+		text-decoration: none;
+	}
+
+		.socialEntry a * {
+			line-height: 2em;
+			vertical-align: middle;
+			text-decoration: none;
+		}
+
+code {
+	color: #c25;
+}
