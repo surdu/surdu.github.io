@@ -3,8 +3,8 @@
     <div id="disqus_thread"></div>
     <script>
       var disqus_config = function () {
-      this.page.url = "{{@blog.url}}{{url}}";
-      this.page.identifier = "{{url}}";
+       this.page.url = "{{site.baseurl}}{{post.url}}";
+       this.page.identifier = "{{post.url}}";
       };
 
       (function() {
