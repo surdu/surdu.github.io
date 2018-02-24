@@ -17,6 +17,7 @@ author:         'Nicu Surdu'
 disqus-shortname: "surdu-me"
 
 exclude: [
-"package.json",
-"README.md"
+  package.json,
+  README.md,
+  vendor
 ]
