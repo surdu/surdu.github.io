@@ -6,7 +6,7 @@ rvm:
 install:
   - nvm install node
   - npm install yaspeller -g
-  - gem install jekyll html-proofer
+  - gem install jekyll html-proofer jekyll-paginate
 
 script:
   - jekyll build
