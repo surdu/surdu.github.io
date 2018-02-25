@@ -6,12 +6,12 @@ markdown: kramdown
 logo: false
 paginate: 15
 baseurl: "/"
-domain_name: 'https://surdu.github.io'
+domain_name: 'http://surdu.me'
 google_analytics: 'UA-19732240-4'
 plugins: [jekyll-paginate]
 
 # Details for the RSS feed generator
-url:            'https://surdu.github.io'
+url:            'http://surdu.me'
 author:         'Nicu Surdu'
 
 disqus-shortname: "surdu-me"
