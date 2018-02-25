@@ -7,7 +7,7 @@ logo: false
 paginate: 15
 baseurl: /
 domain_name: 'https://surdu.github.io'
-google_analytics: 'UA-XXXXXXXX-X'
+google_analytics: 'UA-19732240-4'
 plugins: [jekyll-paginate]
 
 # Details for the RSS feed generator
