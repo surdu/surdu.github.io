@@ -4,7 +4,7 @@ title: About me
 ---
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
-A full-stack developer at [3Pillar Global](https://www.3pillarglobal.com/)
+I'm a full-stack developer at [3Pillar Global](https://www.3pillarglobal.com/)
 and co-founder of [Creative Space](http://creativespace.ro/), a cool makerspace in Timișoara, Romania.
 
 <div class="socialEntry">
