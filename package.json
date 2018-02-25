@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "My really blogging website",
   "scripts": {
-    "start": "jekyll serve",
+    "start": "jekyll serve --drafts",
     "spellcheck": "yaspeller '_posts/*.md' --config etc/yaspeller.json"
   },
   "repository": {
