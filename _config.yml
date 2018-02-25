@@ -5,7 +5,7 @@ meta_description: "Really blogging stuff about Nicu Surdu ..."
 markdown: kramdown
 logo: false
 paginate: 15
-baseurl: /
+baseurl: "/"
 domain_name: 'https://surdu.github.io'
 google_analytics: 'UA-XXXXXXXX-X'
 plugins: [jekyll-paginate]
