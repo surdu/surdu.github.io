@@ -5,7 +5,7 @@ date:   2011-01-20
 disqus: true
 ---
 
-What is Shazam, you may ask ? Let’s say you’re in a bar, and they play a song that you like and you don’t know its name ? Shazam can help you find out what is the name of that song.
+What is Shazam, you may asck ? Let’s say you’re in a bar, and they play a song that you like and you don’t know its name ? Shazam can help you find out what is the name of that song.
 
 What Shazam does, it lets you record up to 15 seconds of the song you are hearing and then it will tell you everything you want to know about that song: the artist, the name of the song, the album, offer you links to YouTube, to buy the song on iTunes, you name it.
 
