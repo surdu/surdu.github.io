@@ -1,15 +1,12 @@
 ---
 layout: post
-title:  "Disable margin collapsing with no visual impact"
+title:  "Disable margin collapse in CSS with no visual impact"
 date:   2017-04-10
 disqus: true
 ---
 
-### TL;DR
-Add `padding: 0.05px 0;` to the parent element. You can see a working example in the [final CodePen](http://codepen.io/surdu/pen/mWqYdQ).
-
 ### The problem
-When working with CSS you sometimes have to work around a behaviour known as [margin collapsing](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing). Basically, the top/bottom margin of two neighboring block elements will be set to the biggest margin value in-between the two elements, if their margins are vertically-adjacent and no text, no clearance, no padding and no border separate them.
+When working with CSS you sometimes have to work around a behaviour known as [margin collapsing](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing). Basically, the top/bottom margin of two neighboring block elements will be set to the biggest margin value in-between the two elements, if their top/bottom margins are adjacent and no text, clearance, padding nor border separate them.
 
 Let's say we want to have a green box inside a red box and the green box to be 50 pixels down inside the red box.
 
