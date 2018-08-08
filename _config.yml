@@ -8,6 +8,7 @@ paginate: 15
 baseurl: "/"
 domain_name: 'http://surdu.me'
 google_analytics: 'UA-19732240-4'
+google_search_console: "qS6PD1v2cPj6gw4QeROZgOtRiolrbkSBHAJ7V9RCpFs"
 plugins: [jekyll-paginate]
 
 # Details for the RSS feed generator
