@@ -1,0 +1,40 @@
+h1 {
+	padding-left: 15px;
+}
+
+#profilePic {
+	float: left;
+	margin-right: 15px;
+	margin-top: -5px;
+	margin-bottom: 10px;
+}
+
+@media (max-width: 480px) {
+	h1 {
+		text-align: center;
+	}
+
+	#profilePic {
+		float: none;
+		margin: 10px auto;
+	}
+}
+
+p {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.socialEntry {
+	margin-bottom: 10px;
+}
+
+	.socialEntry a {
+		text-decoration: none;
+	}
+
+		.socialEntry a * {
+			line-height: 2em;
+			vertical-align: middle;
+			text-decoration: none;
+		}
