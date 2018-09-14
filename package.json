@@ -4,7 +4,7 @@
   "description": "My really blogging website",
   "scripts": {
     "start": "jekyll serve --drafts",
-    "spellcheck": "yaspeller '_*/*.md' --config etc/yaspeller.json"
+    "test": "yaspeller '_*/*.md' --config etc/yaspeller.json"
   },
   "repository": {
     "type": "git",
