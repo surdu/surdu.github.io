@@ -15,7 +15,7 @@ install:
 script:
   - jekyll build
   - htmlproofer ./_site --disable-external
-  - npm run spellcheck
+  - npm test
 
 env:
   global:

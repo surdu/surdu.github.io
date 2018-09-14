@@ -3,6 +3,7 @@ description: really blogging stuff about me ...
 meta_description: "Really blogging stuff about Nicu Surdu ..."
 
 markdown: kramdown
+highlighter: rouge
 logo: false
 paginate: 15
 baseurl: "/"
