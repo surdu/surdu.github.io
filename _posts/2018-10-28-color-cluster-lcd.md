@@ -1,0 +1,2 @@
+  - http://grauonline.de/wordpress/?p=74
+  - changed baudrate to 10400, otherwise connect was spewing garbage
