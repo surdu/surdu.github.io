@@ -1,2 +1,2 @@
   - http://grauonline.de/wordpress/?p=74
-  - changed baudrate to 10400, otherwise connect was spewing garbage
+  - changed baudrate to 10400, otherwise connect was spewing garbage (after reading https://www.blafusel.de/obd/obd2_kw1281.html)
