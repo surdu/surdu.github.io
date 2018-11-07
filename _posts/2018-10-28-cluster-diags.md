@@ -5,3 +5,5 @@
   - started working on full fis
   - realized difference between nav and non-nav when it comes to crc check
   - needed cluster from car, made harness
+  - fixed image render function
+  - arduino acted weird because of too much memory
