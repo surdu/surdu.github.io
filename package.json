@@ -4,7 +4,7 @@
   "description": "My really blogging website",
   "scripts": {
     "start": "jekyll serve --drafts",
-    "test": "yaspeller '_*/*.md' --config etc/yaspeller.json"
+    "test": "npx yaspeller '_*/*.md' --config etc/yaspeller.json"
   },
   "repository": {
     "type": "git",
@@ -12,5 +12,8 @@
   },
   "author": "Surdu Nicolae",
   "license": "MIT",
-  "homepage": "https://surdu.me"
+  "homepage": "https://surdu.me",
+  "devDependencies": {
+    "yaspeller": "^4.1.0"
+  }
 }
