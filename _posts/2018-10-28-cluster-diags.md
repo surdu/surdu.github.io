@@ -15,7 +15,6 @@ disqus: true
   - needed cluster from car, made harness
   - fixed image render function
   - arduino acted weird because of too much memory
-  - finished up/down functions
   - started prototyping for car
 
 I had this project idea in my head for a while now: show custom text on my 2001 VW Golf cluster. My initial idea was to show the current song playing on my phone, but then I found Alexander Grau's [blog post](http://grauonline.de/wordpress/?p=74) that gave me both the idea and the code for what I should display instead: car parameters read from various car modules.
@@ -26,7 +25,7 @@ One thing I wanted to make different from what Alexander did is not having to br
 
 ![VAG-COM cable ](/assets/images/cluster/cable-diagram.gif)
 
-We basically need the right half of this circuit in order to convert the 12V logic of the car's K-line to 5V logic needed for the Arduino. The only components needed are the LM339 and some common resistors.
+We basically need the right-side half of this circuit in order to convert the 12V logic of the car's K-line to 5V logic needed for the Arduino. The only components needed are the LM339 and some common resistors.
 
 Here is how we're going to connect the LM339 to the K-line and to Arduino:
 
@@ -53,4 +52,4 @@ To make sure everything is working fine, I also connected a VAG-COM cable to the
 
 The pin arrangement on the OBD2/VAG-COM cable can be observed in the first image from the previous section. Please note that the pin arrangement depicted there is for the female connector in which the VAG-COM cable is inserted.
 
-Here is the [full pinout for the blue connector](https://gist.github.com/surdu/f1fda10304ec736ab188c04226ff0140#file-cluster-blue-connector) and here is the [full pinout for the OBD2 connector](https://gist.github.com/surdu/f1fda10304ec736ab188c04226ff0140#file-obd2).
+Here is the [full pinout for the cluster's blue connector](https://gist.github.com/surdu/f1fda10304ec736ab188c04226ff0140#file-cluster-blue-connector) and here is the [full pinout for the OBD2 connector](https://gist.github.com/surdu/f1fda10304ec736ab188c04226ff0140#file-obd2).
