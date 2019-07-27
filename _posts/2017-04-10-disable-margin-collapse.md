@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Disable Margin Collapse in CSS with No Visual Impact"
-date:   2017-04-10
 disqus: true
 ---
 

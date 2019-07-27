@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "How Does Shazam Work ?"
-date:   2011-01-20
 disqus: true
 ---
 

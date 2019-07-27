@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Make LineString Resolution Depend on Zoom Level in Openlayers"
+title:  "Make LineString Resolution Depend on Zoom Level in OpenLayers"
 date:   2010-12-20
 disqus: true
 ---

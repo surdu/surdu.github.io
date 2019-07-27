@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Use DigitalOcean as Dynamic DNS"
-date:   2019-07-25
 disqus: true
 ---
 
