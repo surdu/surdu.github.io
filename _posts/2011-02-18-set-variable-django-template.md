@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How to set a variable in Django template"
+title:  "How to Set a Variable in Django Template"
 date:   2011-02-18
 disqus: true
 ---
