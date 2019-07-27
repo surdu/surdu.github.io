@@ -9,10 +9,21 @@
 }
 
 // Import partials from `sass_dir` (defaults to `_sass`)
-@import
-	"syntax"
-;
+@import "syntax";
 
 code {
 	color: #c25;
 }
+
+pre {
+	font-size: 0.7em;
+}
+
+gist {
+	margin-top: -10px;
+	margin-bottom: 20px;
+}
+
+	.gist .gist-meta a:not(:last-child) {
+		display: none;
+	}
