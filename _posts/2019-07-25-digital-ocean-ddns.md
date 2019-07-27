@@ -7,15 +7,15 @@ disqus: true
 
 I have a server at my home on which I host various test projects and I needed a dynamic DNS service as my ISP assigns me an IP dynamically. Tried some dynamic DNS services, but their domain names tend to get long, and I don't like typing URLS. So I decided to buy a domain and handle the DNS update myself.
 
-What we will do is a script that finds out what our IP is and then tells it to DigitalOcean. This script will run at a specified interval on our server.
+What we'll do is a script that finds out what our IP is and then tells it to DigitalOcean. This script will run at a specified interval on our server.
 
 For this you'll need a UNIX machine, a [DigitalOcean](https://www.digitalocean.com/) account and a domain pointed to DigitalOcean's Nameservers.
 
-To see how to point your domain to DigitalOcean check [this article](https://www.digitalocean.com/community/tutorials/how-to-point-to-digitalocean-nameservers-from-common-domain-registrars) or see with your domain's registrar on how to do it, as it vary from registrar to registrar.
+To see how to point your domain to DigitalOcean check [this article](https://www.digitalocean.com/community/tutorials/how-to-point-to-digitalocean-nameservers-from-common-domain-registrars) or check with your domain's registrar on how to do it, as it vary from one to another.
 
 Also, we'll use `cron` in this tutorial, so if you're not familiar with it please read [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-on-a-vps) before.
 
-I will not cover in details what needs to be done on DigitalOcean's side, as their documentations covers it already. I'll mostly list the steps needed along with the links in their documentation:
+I will not cover in detail what needs to be done on DigitalOcean's side, as their documentations covers it already. I'll mostly list the steps needed along with the links in their documentation:
 
 1. [Generate an access token](https://www.digitalocean.com/docs/api/create-personal-access-token/)
 2. [Create a project](https://www.digitalocean.com/docs/projects/how-to/create/)
@@ -37,6 +37,12 @@ Now let's write a bash script that will update DigitalOcean's DNS records with o
 Create a file called `update-dns.sh` with the following contents:
 
 <gist id="gist-aa01a6093a52b3fc7f6e91852beb9b69" data-file="update-ddns.sh"></gist>
+
+After you created the file, let's give it execution rights by executing the following in your terminal:
+
+```bash
+chmod +x update-dns.sh
+```
 
 Now let's go step by step and see what we need to change and what the script actually does.
 
@@ -95,7 +101,7 @@ As for what the script actually does:
 	data-showFooter="false">
 </gist>
 
-The above gets your current IP using an Amazon AWS service. For alternative services, you can consult [this list on OpenWRT](https://openwrt.org/docs/guide-user/services/ddns/client#detecting_public_ip)
+The above gets your current IP using an Amazon AWS service. For alternative services, you can consult [this list on OpenWRT](https://openwrt.org/docs/guide-user/services/ddns/client#detecting_public_ip).
 
 <gist
 	id="gist-aa01a6093a52b3fc7f6e91852beb9b69"
@@ -106,7 +112,9 @@ The above gets your current IP using an Amazon AWS service. For alternative serv
 
 The above will call the DigitalOcean API for each record id that you have defined at line 5, as documented in [DigitalOcean's API documentation](https://developers.digitalocean.com/documentation/v2/#update-a-domain-record).
 
-Now that we have the script, we can set it as a `cron` job so it will update the DNS every 20 minutes.
+You can now give it a quick test to see if it works as intended. Execute the script in your terminal by typing `./update-ddns.sh`. If it worked correctly, you should now see the DNS records updated on DigitalOcean.
+
+Seeing the script works, we can set it as a `cron` job so it will update the DNS every 20 minutes.
 
 Adding the following line in your `crontab` will do just that:
 
@@ -117,6 +125,10 @@ Adding the following line in your `crontab` will do just that:
 	data-showFooter="false">
 </gist>
 
-If you have an Asus router and you can run [Asuswrt-Merlin firmware](https://www.asuswrt-merlin.net/) on it like I do, you could set the DNS update script to be executed by the router every time your IP changes. Please see [their docs](https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS) and the [adaptation of our script](https://github.com/RMerl/asuswrt-merlin/wiki/DDNS-Sample-Scripts#digitalocean) in order to achieve this.
+And just like that we have our own dynamic DNS system up and running.
+
+Alternatively to the `cron` solution, if you have an Asus router and you can run [Asuswrt-Merlin firmware](https://www.asuswrt-merlin.net/) on it, you could set the DNS update script to be executed by the router every time your IP changes. Please see [their docs](https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS) and the [adaptation of our script](https://github.com/RMerl/asuswrt-merlin/wiki/DDNS-Sample-Scripts#digitalocean) in order to achieve this.
+
+Others routers should support this, so check your router's manual to see if you can set up a custom dynamic DNS script on your router.
 
 Hope this helps!
