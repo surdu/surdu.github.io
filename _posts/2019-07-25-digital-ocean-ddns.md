@@ -9,11 +9,13 @@ I have a server at my home on which I host various test projects and I needed a 
 
 What we will do is a script that finds out what our IP is and then tells it to DigitalOcean. This script will run at a specified interval on our server.
 
-For this you'll need a UNIX machine, a [DigitalOcean](https://www.digitalocean.com/) account and a domain pointed to DigitalOcean's nameservers.
+For this you'll need a UNIX machine, a [DigitalOcean](https://www.digitalocean.com/) account and a domain pointed to DigitalOcean's Nameservers.
 
 To see how to point your domain to DigitalOcean check [this article](https://www.digitalocean.com/community/tutorials/how-to-point-to-digitalocean-nameservers-from-common-domain-registrars) or see with your domain's registrar on how to do it, as it vary from registrar to registrar.
 
-I will not cover in details what needs to be done on DigitalOcean's side, as their awesome documentations covers it all. I'll mostly list the steps needed along with the links in their documentation:
+Also, we'll use `cron` in this tutorial, so if you're not familiar with it please read [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-on-a-vps) before.
+
+I will not cover in details what needs to be done on DigitalOcean's side, as their documentations covers it already. I'll mostly list the steps needed along with the links in their documentation:
 
 1. [Generate an access token](https://www.digitalocean.com/docs/api/create-personal-access-token/)
 2. [Create a project](https://www.digitalocean.com/docs/projects/how-to/create/)
@@ -104,9 +106,9 @@ The above gets your current IP using an Amazon AWS service. For alternative serv
 
 The above will call the DigitalOcean API for each record id that you have defined at line 5, as documented in [DigitalOcean's API documentation](https://developers.digitalocean.com/documentation/v2/#update-a-domain-record).
 
-Now that we have the script, we can set it as a [cron](https://en.wikipedia.org/wiki/Cron) job so it will update the DNS every 20 minutes.
+Now that we have the script, we can set it as a `cron` job so it will update the DNS every 20 minutes.
 
-Adding the following line in your crontab will do just that:
+Adding the following line in your `crontab` will do just that:
 
 <gist
 	id="gist-aa01a6093a52b3fc7f6e91852beb9b69"
@@ -114,8 +116,6 @@ Adding the following line in your crontab will do just that:
 	data-line="1"
 	data-showFooter="false">
 </gist>
-
-For details on how to use cron, please read [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-on-a-vps).
 
 If you have an Asus router and you can run [Asuswrt-Merlin firmware](https://www.asuswrt-merlin.net/) on it like I do, you could set the DNS update script to be executed by the router every time your IP changes. Please see [their docs](https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS) and the [adaptation of our script](https://github.com/RMerl/asuswrt-merlin/wiki/DDNS-Sample-Scripts#digitalocean) in order to achieve this.
 
