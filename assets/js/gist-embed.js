@@ -35,28 +35,23 @@ $(function(){
     //get the numeric id from the id attribute of the element holder
     id = id.substr(0, gistMarkerId.length) === gistMarkerId ? id.replace(gistMarkerId, '') : null;
 
-    //make sure result is a numeric id
-    if(!isNaN(parseInt(id, 10))){
-      url = baseurl + '/' + id + '.json';
-      //loading
-      $elem.html('Loading gist ' + url + (data.file ? ', file: ' + data.file : '') + '...');
-      //request the json version of this gist
-      $.ajax({
-        type: 'GET',
-        async: true,
-        jsonpCallback: callbackFunction,
-        contentType: "application/json",
-        url: url,
-        data: data,
-        dataType: 'jsonp',
-        timeout: 10000,
-        error: function(){
-          $elem.html('Failed loading gist ' + url + (data.file ? ', file: ' + data.file : '') + '...');
-        }
-      });
-    }else{
-      $elem.html('Failed loading gist with incorrect id format: ' + $elem.attr('id'));
-    }
+    url = baseurl + '/' + id + '.json';
+    //loading
+    $elem.html('Loading gist ' + url + (data.file ? ', file: ' + data.file : '') + '...');
+    //request the json version of this gist
+    $.ajax({
+      type: 'GET',
+      async: true,
+      jsonpCallback: callbackFunction,
+      contentType: "application/json",
+      url: url,
+      data: data,
+      dataType: 'jsonp',
+      timeout: 10000,
+      error: function(){
+        $elem.html('Failed loading gist ' + url + (data.file ? ', file: ' + data.file : '') + '...');
+      }
+    });
   });
 });
 

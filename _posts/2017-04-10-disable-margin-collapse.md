@@ -5,7 +5,6 @@ date:   2017-04-10
 disqus: true
 ---
 
-### The problem
 When working with CSS you sometimes have to work around a behaviour known as [margin collapsing](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing). Basically, the top/bottom margin of two neighboring block elements will be set to the biggest margin value in-between the two elements, if their top/bottom margins are adjacent and no text, clearance, padding nor border separate them.
 
 Let's say we want to have a green box inside a red box and the green box to be 50 pixels down inside the red box.
