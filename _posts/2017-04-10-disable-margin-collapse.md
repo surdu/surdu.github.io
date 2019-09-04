@@ -28,12 +28,14 @@ After running a [quick test](http://codepen.io/surdu/pen/GWMNZK) on a variety of
 I would say `0.1px` it's still a good choice if you set it on only one side, but Firefox seems to render the accumulated 0.2 pixels on retina displays if you set the padding on both top and bottom.
 
 So let's apply this to our example:
-<p data-height="309" data-theme-id="0" data-slug-hash="mWqYdQ" data-default-tab="css,result" data-user="surdu" data-embed-version="2" data-pen-title="Border collapse fix" class="codepen">
+<p data-height="309" data-theme-id="0" data-slug-hash="mWqYdQ" data-default-tab="css,result" data-user="surdu" data-embed-version="2" data-pen-title="Border collapse fix" class="codepen"></p>
 
 As you can see, after applying the 0.05 pixels padding to the parent element's top and bottom, now the margin  of the children element is applied as we initially intended.
 
 In order to make sure this doesn't have any visual impact, I encourage you to run the [above mentioned test](http://codepen.io/surdu/pen/GWMNZK) on your combination of browser and screen density. The solution will have no visual impact if the last green box with the `0.05px` text in it has no red borders on top and bottom.
 
-If you find a context in which this solution fails, please let me know in the comments below. It will be much appreciated ;).
+If you find a context in which this solution fails, please let me know in the comments below.
 
 <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+
+Hope this helps 👍

@@ -130,4 +130,4 @@ Alternatively to the `cron` solution, if you have an Asus router and you can run
 
 Others routers should support this, so check your router's manual to see if you can set up a custom dynamic DNS script on your router.
 
-Hope this helps!
+Hope this helps ✌️

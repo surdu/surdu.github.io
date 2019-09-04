@@ -4,9 +4,6 @@ branches:
   only:
     - master
 
-rvm:
-  - 2.3.3
-
 install:
   - nvm install node
   - npm install yaspeller -g

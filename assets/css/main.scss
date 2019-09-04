@@ -12,7 +12,7 @@
 @import "syntax";
 
 code {
-	color: #c25;
+	color: #4A4A4A;
 }
 
 pre {
@@ -27,3 +27,7 @@ gist {
 	.gist .gist-meta a:not(:last-child) {
 		display: none;
 	}
+
+.post-content a {
+	color: #c25;
+}
