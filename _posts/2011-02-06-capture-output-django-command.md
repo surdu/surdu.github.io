@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Capture the Output of a Django Command"
-disqus: true
 ---
 
 

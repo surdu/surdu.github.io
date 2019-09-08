@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "How to Fix APC Back-UPS ES Constant Beeping Problem"
-disqus: true
+meta_image: /assets/images/apc/bad-caps.jpg
 ---
 
 Lately my APC Back-UPS ES 700 was crippled by the problem that seems to kill most of it's models: after a surge event, instead of switching to battery it starts to continuously beep. For a while I could restart it several times and the problem would go away, but in the past few days nothing would make it turn on again without constant beeping.

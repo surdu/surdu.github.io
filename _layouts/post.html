@@ -65,7 +65,7 @@ post_class: post-template
         </footer>
 
         <!-- Disqus comments -->
-        {% if page.disqus %}
+        {% if page.disqus != false %}
             {% include disqus.html %}
         {% endif %}
 
