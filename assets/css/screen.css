@@ -581,7 +581,7 @@ margin on the iframe, cause it breaks stuff. */
     height: 38px;
     padding: 0 15px 0 10px;
     border: transparent 1px solid;
-    color: #9EABB3;
+    color: #2E2E2E;
     text-align: center;
     font-size: 12px;
     text-transform: uppercase;
@@ -607,7 +607,7 @@ margin on the iframe, cause it breaks stuff. */
     height: 38px;
     padding: 0 20px;
     border: transparent 1px solid;
-    color: #9EABB3;
+    color: #2E2E2E;
     text-align: center;
     font-size: 12px;
     text-transform: uppercase;
@@ -695,13 +695,19 @@ margin on the iframe, cause it breaks stuff. */
 }
 
 .no-cover .page-description {
-    color: rgba(0,0,0,0.5);
+    color: rgba(0,0,0,0.6);
 }
 
 .no-cover .main-nav.overlay .back-button,
 .no-cover .main-nav.overlay .subscribe-button {
-    color: rgba(0,0,0,0.4);
-    border-color: rgba(0,0,0,0.3);
+    color: rgba(0,0,0,0.8);
+    border-color: rgba(0,0,0,0.7);
+}
+.no-cover .main-nav.overlay .subscribe-button:hover,
+.subscribe-button:hover {
+	background-color: #EF8021;
+	color: #F7F7F7;
+	border-color: #F7F7F7;
 }
 
 /* Add subtle load-in animation for content on the home page */
@@ -777,7 +783,7 @@ body:not(.post-template) .post-title {
     font-family: "Open Sans", sans-serif;
     font-size: 1.5rem;
     line-height: 2.2rem;
-    color: #9EABB3;
+    color: rgba(0, 0, 0, 0.6);
 }
 
 .author-thumb {
@@ -916,9 +922,12 @@ body:not(.post-template) .post-title {
     border-top: #EBF2F6 1px solid;
 }
 
-.post-footer h4 {
+.post-footer .post-footer-title {
     font-size: 1.8rem;
     margin: 0;
+    color: #2E2E2E;
+    font-family: "Open Sans", sans-serif;
+    font-weight: bold;
 }
 
 .post-footer p {
@@ -1220,7 +1229,7 @@ body:not(.post-template) .post-title {
     margin: 4rem auto;
     font-family: "Open Sans", sans-serif;
     font-size: 1.3rem;
-    color: #9EABB3;
+    color: rgba(0, 0, 0, 0.6);
     text-align: center;
 }
 
