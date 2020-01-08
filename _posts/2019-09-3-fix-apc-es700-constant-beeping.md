@@ -28,7 +28,7 @@ All 4 bad caps where the same: `22uF 25V` made by Jamicon.
 
 ![Culprit](/assets/images/apc/culprit.jpg)
 
-I replaced mine with better quality [Nichicon capacitors](https://ro.farnell.com/nichicon/uka1e220mdd1td/cap-22-f-25v-20/dp/2841899) as I didn't wanted to replace them again anytime soon.
+I replaced mine with better quality [Nichicon capacitors](https://amzn.to/2QAS4qp) as I didn't wanted to replace them again anytime soon.
 
 After putting it back together I realised that this also fixed another problem: for as far as I can remember, like 5 seconds after starting the UPS, it started buzzing loudly for a while. Now you can barely hear the buzzing.
 
