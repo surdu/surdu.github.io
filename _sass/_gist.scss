@@ -1,0 +1,8 @@
+gist {
+	margin-top: -10px;
+	margin-bottom: 20px;
+
+	.gist-meta a:not(:last-child) {
+		display: none;
+	}
+}

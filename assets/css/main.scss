@@ -10,6 +10,8 @@
 
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import "syntax";
+@import "gist";
+@import "header";
 
 code {
 	color: #4A4A4A;
@@ -18,15 +20,6 @@ code {
 pre {
 	font-size: 0.7em;
 }
-
-gist {
-	margin-top: -10px;
-	margin-bottom: 20px;
-}
-
-	.gist .gist-meta a:not(:last-child) {
-		display: none;
-	}
 
 .post-content a {
 	color: #c25;
