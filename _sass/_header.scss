@@ -1,23 +1,15 @@
-@font-face {
-  font-family: 'ZXSpectrum';
-  src: url('/assets/fonts/ZXSpectrum-7.eot?#iefix') format('embedded-opentype'),
-       url('/assets/fonts/ZXSpectrum-7.woff') format('woff'),
-       url('/assets/fonts/ZXSpectrum-7.ttf')  format('truetype'),
-       url('/assets/fonts/ZXSpectrum-7.svg#ZXSpectrum-7') format('svg');
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
-
 header.top-header {
 	background-color: #F5F8FA;
 	margin-bottom: 20px;
+	height: 32px;
 
 	.logo {
-		font-family: "ZXSpectrum";
-		font-size: 45px;
 		margin-left: 10px;
 		text-decoration: none;
+
+		img {
+			height: 100%;
+		}
 	}
 
 	nav {
