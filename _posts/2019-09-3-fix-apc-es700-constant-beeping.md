@@ -24,12 +24,12 @@ Measured all capacitors and sure enough, found 4 caps that where dead as a dodo.
 
 _Note: the capacitors in the picture are already changed. Yours will look different, probably like the ones in the picture below._
 
-All 4 bad caps where the same: `22uF 25V` made by Jamicon.
+All 4 bad caps where the same: capacitance `22uF` and voltage rating of `25V` made by Jamicon.
 
 ![Culprit](/assets/images/apc/culprit.jpg)
 
-I replaced mine with better quality [Nichicon capacitors](https://amzn.to/2QAS4qp) as I didn't wanted to replace them again anytime soon.
+I replaced mine with better quality [Nichicon capacitors](http://s.click.aliexpress.com/e/_soNn0C) as I didn't wanted to replace them again anytime soon.
 
-After putting it back together I realised that this also fixed another problem: for as far as I can remember, like 5 seconds after starting the UPS, it started buzzing loudly for a while. Now you can barely hear the buzzing.
+After putting it back together I realized that this also fixed another problem: for as far as I can remember, like 5 seconds after starting the UPS, it started buzzing loudly for a while. Now you can barely hear the buzzing.
 
 Hope this helps 😎
