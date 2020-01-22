@@ -9,8 +9,10 @@
 	<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
 	<link rel="shortcut icon" href="/assets/favicon/favicon.ico">
 
-	{% if layout.is_post %}
 	<title>{{ page.title }} | {{ site.name }}</title>
+
+	{% if layout.is_post %}
+
 	<meta name="description" content="{{ page.excerpt | strip_html | strip }}" />
 
 	<meta property="og:locale" content="en_US" />
@@ -37,7 +39,6 @@
 	<meta name="twitter:image" content="{{ site.url }}/assets/images/profile.jpg" />
 	{% endif %}
 	{% else %}
-	<title>{{ site.name }}</title>
 	<meta name="description" content="{{ site.meta_description}}" />
 
 	<meta property="og:title" content="{{ site.name }}" />

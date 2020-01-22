@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Capture the Output of a Django Command"
+tags: [web, python]
 ---
 
 

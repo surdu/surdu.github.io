@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Disable Margin Collapse in CSS with No Visual Impact"
+tags: [web]
 ---
 
 When working with CSS you sometimes have to work around a behaviour known as [margin collapsing](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing). Basically, the top/bottom margin of two neighboring block elements will be set to the biggest margin value in-between the two elements, if their top/bottom margins are adjacent and no text, clearance, padding nor border separate them.

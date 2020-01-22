@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "How to Set a Variable in Django Template"
+tags: [web, python]
 ---
 
 As you may have figured by now, Django does not implement such a feature. That is, because the logic of setting the variable must go in the view, not in the template. But there are some rare cases when you actually need this.
