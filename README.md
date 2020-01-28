@@ -1,3 +1,0 @@
-# surdu.me [![Build Status](https://travis-ci.org/surdu/surdu.github.io.svg?branch=master)](https://travis-ci.org/surdu/surdu.github.io)
-
-My really :zzz: blogging :zzz: website ...
