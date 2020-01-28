@@ -1,2 +1,0 @@
-I"‡<p>The documentation is very slim when it talks about <a href="https://docs.djangoproject.com/en/2.1/ref/django-admin/#running-management-commands-from-your-code">how to call a Django command from code</a>. In order to do this, just use <code class="highlighter-rouge">call_command</code>. To solve the trick of capturing the output of this I had to dig a little into the Django source.</p>
-:ET
