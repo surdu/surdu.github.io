@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png?v">
+	<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+	<link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+
+	<title>How to Fix APC Back-UPS ES Constant Beeping Problem | Nicu Surdu</title>
+
+	
+
+	<meta name="description" content="Lately my APC Back-UPS ES 700 was crippled by the problem that seems to kill most of it’s models: after a surge event, instead of switching to battery it starts to continuously beep. For a while I could restart it several times and the problem would go away, but in the past few days nothing would make it turn on again without constant beeping." />
+
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="How to Fix APC Back-UPS ES Constant Beeping Problem" />
+	<meta property="og:description" content="Lately my APC Back-UPS ES 700 was crippled by the problem that seems to kill most of it’s models: after a surge event, instead of switching to battery it starts to continuously beep. For a while I could restart it several times and the problem would go away, but in the past few days nothing would make it turn on again without constant beeping." />
+	<meta property="og:url" content="http://surdu.me/2019/09/03/fix-apc-es700-constant-beeping.html" />
+	<meta property="og:site_name" content="Nicu Surdu" />
+
+	<meta name="twitter:title" content="How to Fix APC Back-UPS ES Constant Beeping Problem" />
+	<meta name="twitter:description" content="Lately my APC Back-UPS ES 700 was crippled by the problem that seems to kill most of it’s models: after a surge event, instead of switching to battery it starts to continuously beep. For a while I could restart it several times and the problem would go away, but in the past few days nothing would make it turn on again without constant beeping." />
+	<meta name="twitter:creator" content="@surdume" />
+	<meta name="twitter:site" content="@surdume" />
+	<meta name="twitter:domain" content="surdu.me" />
+	
+	<meta property="og:image" content="http://surdu.me/assets/images/apc/bad-caps.jpg" />
+	<meta property="og:image:secure_url" content="http://surdu.me/assets/images/apc/bad-caps.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:image" content="http://surdu.me/assets/images/apc/bad-caps.jpg" />
+	
+	
+
+	<meta name="google-site-verification" content="qS6PD1v2cPj6gw4QeROZgOtRiolrbkSBHAJ7V9RCpFs" />
+	<meta name="HandheldFriendly" content="True" />
+	<meta name="MobileOptimized" content="320" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#000000" />
+
+	<link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+	<link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+</head>
+<body class="post-template">
+
+	<header class="main-header post-head no-cover">
+	<nav class="main-nav  clearfix">
+		<a class="back-button icon-arrow-left" href="/">Home</a>
+		<a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+	</nav>
+</header>
+
+<main class="content" role="main">
+
+	<article class="post">
+
+		<header class="post-header">
+			<h1 class="post-title">How to Fix APC Back-UPS ES Constant Beeping Problem</h1>
+			<section class="post-meta">
+				<time class="post-date" datetime="2019-09-03">03 Sep 2019</time>
+				
+
+			</section>
+		</header>
+
+		<section class="post-content">
+			<p>Lately my APC Back-UPS ES 700 was crippled by the problem that seems to kill most of it’s models: after a surge event, instead of switching to battery it starts to continuously beep. For a while I could restart it several times and the problem would go away, but in the past few days nothing would make it turn on again without constant beeping.</p>
+
+<p>First of all, you should eliminate that the beeping is not caused by a normal condition. Please check the <a href="/assets/images/apc/manual.pdf">user manual’s</a> <code class="highlighter-rouge">Status Indicators</code> section for <code class="highlighter-rouge">Constant tone</code> audible indication.</p>
+
+<p>If it’s not a normal condition, it’s time to take it apart.</p>
+
+<p>Before disconnecting the main board, it would be a good idea to take a picture of it’s connections, as there are plenty of them:</p>
+
+<p><img src="/assets/images/apc/connections.jpg" alt="Connections" /></p>
+
+<p>After a quick visual inspection of the main board it was clear that no parts where blown. Next I checked on a hint from a YouTube comment, that someone was successful in fixing it by replacing some bad capacitors, but he/she didn’t go into any more detail than that.</p>
+
+<p>Time to take out the <a href="http://s.click.aliexpress.com/e/5uSjWch2">ESR Meter</a>. This will allow us to determine if a capacitor might be bad without taking it out of the circuit.</p>
+
+<p>Measured all capacitors and sure enough, found 4 caps that where dead as a dodo. I’ve circled them in red in the following picture.</p>
+
+<p><img src="/assets/images/apc/bad-caps.jpg" alt="Bad Capacitors" /></p>
+
+<p><em>Note: the capacitors in the picture are already changed. Yours will look different, probably like the ones in the picture below.</em></p>
+
+<p>All 4 bad caps where the same: capacitance <code class="highlighter-rouge">22uF</code> and voltage rating of <code class="highlighter-rouge">25V</code> made by Jamicon.</p>
+
+<p><img src="/assets/images/apc/culprit.jpg" alt="Culprit" /></p>
+
+<p>I replaced mine with better quality <a href="http://s.click.aliexpress.com/e/_soNn0C">Nichicon capacitors</a> as I didn’t wanted to replace them again anytime soon.</p>
+
+<p>After putting it back together I realized that this also fixed another problem: for as far as I can remember, like 5 seconds after starting the UPS, it started buzzing loudly for a while. Now you can barely hear the buzzing.</p>
+
+<p>Hope this helps 😎</p>
+
+		</section>
+
+		
+
+		<footer class="post-footer">
+			<!-- If we want to display author's name and bio -->
+			
+				<figure class="author-image">
+					<a class="img"
+						href="/about.html"
+						aria-label="About Nicu Surdu"
+						style="background-image: url(/assets/images/profile.jpg)">
+					<span class="hidden">Nicu Surdu's Picture</span></a>
+				</figure>
+				<section class="author">
+					<!-- Author Name -->
+					<div class="post-footer-title">Nicu Surdu</div>
+					<!-- Author Bio -->
+					<p>
+							Technical Lead at <a href="https://www.3pillarglobal.com/">3Pillar Global</a> <br />
+							and co-founder of <a href="http://creativespace.ro/">Creative Space</a>, a cool makerspace in Timișoara, Romania.
+					</p>
+				</section>
+			
+
+			<!-- Share links section -->
+			<section class="share">
+	<div class="post-footer-title">Share this post</div>
+	<a class="icon-twitter"
+		href="http://twitter.com/share?text=How to Fix APC Back-UPS ES Constant Beeping Problem&amp;url=http://surdu.me/2019/09/03/fix-apc-es700-constant-beeping.html"
+		aria-label="Share on Twitter"
+		onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+	</a>
+	<a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://surdu.me/2019/09/03/fix-apc-es700-constant-beeping.html"
+		aria-label="Share on Facebook"
+		onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+	</a>
+	<a class="icon-google-plus"
+		href="https://plus.google.com/share?url=http://surdu.me/2019/09/03/fix-apc-es700-constant-beeping.html"
+		aria-label="Share on Google+"
+		onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+	</a>
+</section>
+
+		</footer>
+
+		<!-- Disqus comments -->
+		
+				<section class="disqus">
+ <h3>Comments</h3>
+	<div id="disqus_thread"></div>
+	<script>
+		var disqus_config = function () {
+			this.page.url = "http://surdu.me/2019/09/03/fix-apc-es700-constant-beeping.html";
+			this.page.identifier = "/2019/09/03/fix-apc-es700-constant-beeping.html";
+		};
+
+		(function() {
+			var d = document, s = d.createElement('script');
+			s.src = 'https://surdu-me.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+	</script>
+</section>
+
+		
+
+	</article>
+
+</main>
+
+	<footer class="site-footer clearfix" aria-disabled="true">
+		<section class="copyright">
+			<b>Nicu Surdu</b> &copy; 2020
+		</section>
+		<section class="poweredby">
+			<a href="http://github.com/rosario/kasper">Kasper theme</a>
+		</section>
+	</footer>
+
+	<script type="text/javascript" src="/assets/js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+	<script type="text/javascript" src="/assets/js/index.js"></script>
+	<script type="text/javascript" src="/assets/js/gist-embed.js"></script>
+	<script type="text/javascript" src="/assets/js/favicon.js"></script><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-19732240-4"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'UA-19732240-4');
+</script>
+</body>
+</html>

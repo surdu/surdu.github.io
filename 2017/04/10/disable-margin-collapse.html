@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png?v">
+	<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+	<link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+
+	<title>Disable Margin Collapse in CSS with No Visual Impact | Nicu Surdu</title>
+
+	
+
+	<meta name="description" content="When working with CSS you sometimes have to work around a behaviour known as margin collapsing. Basically, the top/bottom margin of two neighboring block elements will be set to the biggest margin value in-between the two elements, if their top/bottom margins are adjacent and no text, clearance, padding nor border separate them." />
+
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Disable Margin Collapse in CSS with No Visual Impact" />
+	<meta property="og:description" content="When working with CSS you sometimes have to work around a behaviour known as margin collapsing. Basically, the top/bottom margin of two neighboring block elements will be set to the biggest margin value in-between the two elements, if their top/bottom margins are adjacent and no text, clearance, padding nor border separate them." />
+	<meta property="og:url" content="http://surdu.me/2017/04/10/disable-margin-collapse.html" />
+	<meta property="og:site_name" content="Nicu Surdu" />
+
+	<meta name="twitter:title" content="Disable Margin Collapse in CSS with No Visual Impact" />
+	<meta name="twitter:description" content="When working with CSS you sometimes have to work around a behaviour known as margin collapsing. Basically, the top/bottom margin of two neighboring block elements will be set to the biggest margin value in-between the two elements, if their top/bottom margins are adjacent and no text, clearance, padding nor border separate them." />
+	<meta name="twitter:creator" content="@surdume" />
+	<meta name="twitter:site" content="@surdume" />
+	<meta name="twitter:domain" content="surdu.me" />
+	
+	<meta property="og:image" content="http://surdu.me/assets/images/profile.jpg" />
+	<meta property="og:image:secure_url" content="http://surdu.me/assets/images/profile.jpg" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:image" content="http://surdu.me/assets/images/profile.jpg" />
+	
+	
+
+	<meta name="google-site-verification" content="qS6PD1v2cPj6gw4QeROZgOtRiolrbkSBHAJ7V9RCpFs" />
+	<meta name="HandheldFriendly" content="True" />
+	<meta name="MobileOptimized" content="320" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#000000" />
+
+	<link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+	<link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+</head>
+<body class="post-template">
+
+	<header class="main-header post-head no-cover">
+	<nav class="main-nav  clearfix">
+		<a class="back-button icon-arrow-left" href="/">Home</a>
+		<a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+	</nav>
+</header>
+
+<main class="content" role="main">
+
+	<article class="post">
+
+		<header class="post-header">
+			<h1 class="post-title">Disable Margin Collapse in CSS with No Visual Impact</h1>
+			<section class="post-meta">
+				<time class="post-date" datetime="2017-04-10">10 Apr 2017</time>
+				
+	in
+	
+		<a class='post' href='/tag/web'>#web</a>
+	
+
+
+			</section>
+		</header>
+
+		<section class="post-content">
+			<p>When working with CSS you sometimes have to work around a behaviour known as <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing">margin collapsing</a>. Basically, the top/bottom margin of two neighboring block elements will be set to the biggest margin value in-between the two elements, if their top/bottom margins are adjacent and no text, clearance, padding nor border separate them.</p>
+
+<p>Let’s say we want to have a green box inside a red box and the green box to be 50 pixels down inside the red box.</p>
+
+<p>If we just add <code class="highlighter-rouge">margin-top: 50px;</code> to the inside green box we’ll soon realize that the result is not as intended:</p>
+
+<p data-height="275" data-theme-id="dark" data-slug-hash="QppVGv" data-default-tab="css,result" data-user="surdu" data-embed-version="2" data-pen-title="No border collapse example" class="codepen"></p>
+
+<p>Note that the top-margin of the green children element seems to be passed on to the red parent.</p>
+
+<p>The most common method of preventing this is to use <code class="highlighter-rouge">overflow: hidden;</code> on the parent element. Other methods include adding <code class="highlighter-rouge">float</code>, <code class="highlighter-rouge">border</code>, <code class="highlighter-rouge">padding</code> or something else that will separate the two margins.</p>
+
+<p>But if we don’t want to change the way the parent acts and looks, all of the above methods will not work for us.</p>
+
+<h3 id="the-solution">The solution</h3>
+<p>Sub-pixels values to the rescue !</p>
+
+<p>What we can do is set top/bottom padding to a value that is greater than 0 pixels, so that margin collapsing is not applied, but also less than 1 pixels so the browser doesn’t render anything.</p>
+
+<p>After running a <a href="http://codepen.io/surdu/pen/GWMNZK">quick test</a> on a variety of browser and screen density combinations I’ve come to the conclusion that <code class="highlighter-rouge">0.05px</code> is our best bet in order to not render anything.</p>
+
+<p>I would say <code class="highlighter-rouge">0.1px</code> it’s still a good choice if you set it on only one side, but Firefox seems to render the accumulated 0.2 pixels on retina displays if you set the padding on both top and bottom.</p>
+
+<p>So let’s apply this to our example:</p>
+<p data-height="309" data-theme-id="0" data-slug-hash="mWqYdQ" data-default-tab="css,result" data-user="surdu" data-embed-version="2" data-pen-title="Border collapse fix" class="codepen"></p>
+
+<p>As you can see, after applying the 0.05 pixels padding to the parent element’s top and bottom, now the margin  of the children element is applied as we initially intended.</p>
+
+<p>In order to make sure this doesn’t have any visual impact, I encourage you to run the <a href="http://codepen.io/surdu/pen/GWMNZK">above mentioned test</a> on your combination of browser and screen density. The solution will have no visual impact if the last green box with the <code class="highlighter-rouge">0.05px</code> text in it has no red borders on top and bottom.</p>
+
+<p>If you find a context in which this solution fails, please let me know in the comments below.</p>
+
+<script async="" src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+
+<p>Hope this helps 👍</p>
+
+		</section>
+
+		
+
+		<footer class="post-footer">
+			<!-- If we want to display author's name and bio -->
+			
+				<figure class="author-image">
+					<a class="img"
+						href="/about.html"
+						aria-label="About Nicu Surdu"
+						style="background-image: url(/assets/images/profile.jpg)">
+					<span class="hidden">Nicu Surdu's Picture</span></a>
+				</figure>
+				<section class="author">
+					<!-- Author Name -->
+					<div class="post-footer-title">Nicu Surdu</div>
+					<!-- Author Bio -->
+					<p>
+							Technical Lead at <a href="https://www.3pillarglobal.com/">3Pillar Global</a> <br />
+							and co-founder of <a href="http://creativespace.ro/">Creative Space</a>, a cool makerspace in Timișoara, Romania.
+					</p>
+				</section>
+			
+
+			<!-- Share links section -->
+			<section class="share">
+	<div class="post-footer-title">Share this post</div>
+	<a class="icon-twitter"
+		href="http://twitter.com/share?text=Disable Margin Collapse in CSS with No Visual Impact&amp;url=http://surdu.me/2017/04/10/disable-margin-collapse.html"
+		aria-label="Share on Twitter"
+		onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+	</a>
+	<a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://surdu.me/2017/04/10/disable-margin-collapse.html"
+		aria-label="Share on Facebook"
+		onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+	</a>
+	<a class="icon-google-plus"
+		href="https://plus.google.com/share?url=http://surdu.me/2017/04/10/disable-margin-collapse.html"
+		aria-label="Share on Google+"
+		onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+	</a>
+</section>
+
+		</footer>
+
+		<!-- Disqus comments -->
+		
+				<section class="disqus">
+ <h3>Comments</h3>
+	<div id="disqus_thread"></div>
+	<script>
+		var disqus_config = function () {
+			this.page.url = "http://surdu.me/2017/04/10/disable-margin-collapse.html";
+			this.page.identifier = "/2017/04/10/disable-margin-collapse.html";
+		};
+
+		(function() {
+			var d = document, s = d.createElement('script');
+			s.src = 'https://surdu-me.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+	</script>
+</section>
+
+		
+
+	</article>
+
+</main>
+
+	<footer class="site-footer clearfix" aria-disabled="true">
+		<section class="copyright">
+			<b>Nicu Surdu</b> &copy; 2020
+		</section>
+		<section class="poweredby">
+			<a href="http://github.com/rosario/kasper">Kasper theme</a>
+		</section>
+	</footer>
+
+	<script type="text/javascript" src="/assets/js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+	<script type="text/javascript" src="/assets/js/index.js"></script>
+	<script type="text/javascript" src="/assets/js/gist-embed.js"></script>
+	<script type="text/javascript" src="/assets/js/favicon.js"></script><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-19732240-4"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'UA-19732240-4');
+</script>
+</body>
+</html>

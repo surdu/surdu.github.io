@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<lastBuildDate>Wed, 29 Jan 2020 01:32:41 +0200</lastBuildDate>
+		<title></title>
+		<description>Personal blog of Nicu Surdu</description>
+		<link>http://surdu.me//</link>
+		<atom:link href="http://surdu.me//feed.xml" rel="self" type="application/rss+xml"/>
+		<pubDate>Wed, 29 Jan 2020 01:32:41 +0200</pubDate>
+		<lastBuildDate>Wed, 29 Jan 2020 01:32:41 +0200</lastBuildDate>
+		<generator>Jekyll v4.0.0</generator>
+		
+			<item>
+				<title>How to Fix APC Back-UPS ES Constant Beeping Problem</title>
+				<description>&lt;p&gt;Lately my APC Back-UPS ES 700 was crippled by the problem that seems to kill most of it’s models: after a surge event, instead of switching to battery it starts to continuously beep. For a while I could restart it several times and the problem would go away, but in the past few days nothing would make it turn on again without constant beeping.&lt;/p&gt;
+
+&lt;p&gt;First of all, you should eliminate that the beeping is not caused by a normal condition. Please check the &lt;a href=&quot;/assets/images/apc/manual.pdf&quot;&gt;user manual’s&lt;/a&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;Status Indicators&lt;/code&gt; section for &lt;code class=&quot;highlighter-rouge&quot;&gt;Constant tone&lt;/code&gt; audible indication.&lt;/p&gt;
+
+&lt;p&gt;If it’s not a normal condition, it’s time to take it apart.&lt;/p&gt;
+
+&lt;p&gt;Before disconnecting the main board, it would be a good idea to take a picture of it’s connections, as there are plenty of them:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/apc/connections.jpg&quot; alt=&quot;Connections&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After a quick visual inspection of the main board it was clear that no parts where blown. Next I checked on a hint from a YouTube comment, that someone was successful in fixing it by replacing some bad capacitors, but he/she didn’t go into any more detail than that.&lt;/p&gt;
+
+&lt;p&gt;Time to take out the &lt;a href=&quot;http://s.click.aliexpress.com/e/5uSjWch2&quot;&gt;ESR Meter&lt;/a&gt;. This will allow us to determine if a capacitor might be bad without taking it out of the circuit.&lt;/p&gt;
+
+&lt;p&gt;Measured all capacitors and sure enough, found 4 caps that where dead as a dodo. I’ve circled them in red in the following picture.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/apc/bad-caps.jpg&quot; alt=&quot;Bad Capacitors&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Note: the capacitors in the picture are already changed. Yours will look different, probably like the ones in the picture below.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;All 4 bad caps where the same: capacitance &lt;code class=&quot;highlighter-rouge&quot;&gt;22uF&lt;/code&gt; and voltage rating of &lt;code class=&quot;highlighter-rouge&quot;&gt;25V&lt;/code&gt; made by Jamicon.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/apc/culprit.jpg&quot; alt=&quot;Culprit&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I replaced mine with better quality &lt;a href=&quot;http://s.click.aliexpress.com/e/_soNn0C&quot;&gt;Nichicon capacitors&lt;/a&gt; as I didn’t wanted to replace them again anytime soon.&lt;/p&gt;
+
+&lt;p&gt;After putting it back together I realized that this also fixed another problem: for as far as I can remember, like 5 seconds after starting the UPS, it started buzzing loudly for a while. Now you can barely hear the buzzing.&lt;/p&gt;
+
+&lt;p&gt;Hope this helps 😎&lt;/p&gt;
+</description>
+				<pubDate>Tue, 03 Sep 2019 00:00:00 +0300</pubDate>
+				<link>http://surdu.me//2019/09/03/fix-apc-es700-constant-beeping.html</link>
+				<guid isPermaLink="true">http://surdu.me//2019/09/03/fix-apc-es700-constant-beeping.html</guid>
+				
+				
+			</item>
+		
+			<item>
+				<title>Use DigitalOcean as Dynamic DNS</title>
+				<description>&lt;p&gt;I have a server at my home on which I host various test projects and I needed a dynamic DNS service as my ISP assigns me an IP dynamically. Tried some dynamic DNS services, but their domain names tend to get long, and I don’t like typing URLS. So I decided to buy a domain and handle the DNS update myself.&lt;/p&gt;
+
+&lt;p&gt;What we’ll do is a script that finds out what our IP is and then tells it to DigitalOcean. This script will run at a specified interval on our server.&lt;/p&gt;
+
+&lt;p&gt;For this you’ll need a UNIX machine, a &lt;a href=&quot;https://www.digitalocean.com/&quot;&gt;DigitalOcean&lt;/a&gt; account and a domain pointed to DigitalOcean’s Nameservers.&lt;/p&gt;
+
+&lt;p&gt;To see how to point your domain to DigitalOcean check &lt;a href=&quot;https://www.digitalocean.com/community/tutorials/how-to-point-to-digitalocean-nameservers-from-common-domain-registrars&quot;&gt;this article&lt;/a&gt; or check with your domain’s registrar on how to do it, as it vary from one to another.&lt;/p&gt;
+
+&lt;p&gt;Also, we’ll use &lt;code class=&quot;highlighter-rouge&quot;&gt;cron&lt;/code&gt; in this tutorial, so if you’re not familiar with it please read &lt;a href=&quot;https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-on-a-vps&quot;&gt;this tutorial&lt;/a&gt; before.&lt;/p&gt;
+
+&lt;p&gt;I will not cover in detail what needs to be done on DigitalOcean’s side, as their documentations covers it already. I’ll mostly list the steps needed along with the links in their documentation:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.digitalocean.com/docs/api/create-personal-access-token/&quot;&gt;Generate an access token&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.digitalocean.com/docs/projects/how-to/create/&quot;&gt;Create a project&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.digitalocean.com/docs/networking/dns/how-to/add-domains/&quot;&gt;Add domains to the created project&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.digitalocean.com/docs/networking/dns/how-to/manage-records/#a-records&quot;&gt;Add at least one &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; record to your DNS records&lt;/a&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In my case, I added two &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; DNS records:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/do-dns/records.jpg&quot; alt=&quot;Example records&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The first one is the required one, and will point &lt;code class=&quot;highlighter-rouge&quot;&gt;example.com&lt;/code&gt; domain to my machine. The second one will point all sub-domains of &lt;code class=&quot;highlighter-rouge&quot;&gt;example.com&lt;/code&gt; (like &lt;code class=&quot;highlighter-rouge&quot;&gt;test.example.com&lt;/code&gt;) to my machine.&lt;/p&gt;
+
+&lt;p&gt;For the first one enter &lt;code class=&quot;highlighter-rouge&quot;&gt;@&lt;/code&gt; in the &lt;code class=&quot;highlighter-rouge&quot;&gt;Hostname&lt;/code&gt; field when you create the record, and for the second one enter &lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt;. As for the IP, it doesn’t matter what you enter as it will be automatically updated later by our script.&lt;/p&gt;
+
+&lt;p&gt;This should be all that you need to do on the side of DigitalOcean.&lt;/p&gt;
+
+&lt;p&gt;Now let’s write a bash script that will update DigitalOcean’s DNS records with our IP.&lt;/p&gt;
+
+&lt;p&gt;Create a file called &lt;code class=&quot;highlighter-rouge&quot;&gt;update-dns.sh&lt;/code&gt; with the following contents:&lt;/p&gt;
+
+&lt;gist id=&quot;gist-aa01a6093a52b3fc7f6e91852beb9b69&quot; data-file=&quot;update-ddns.sh&quot;&gt;&lt;/gist&gt;
+
+&lt;p&gt;After you created the file, let’s give it execution rights by executing the following in your terminal:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; +x update-dns.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now let’s go step by step and see what we need to change and what the script actually does.&lt;/p&gt;
+
+&lt;p&gt;The things we need to change are at the top of the file. We’ll start by changing line 3 where we need to add the access token that we generated above in step 1 on DigitalOcean. Should look something like this:&lt;/p&gt;
+
+&lt;gist id=&quot;gist-aa01a6093a52b3fc7f6e91852beb9b69&quot; data-file=&quot;update-ddns-filled.sh&quot; data-line=&quot;3&quot; data-showFooter=&quot;false&quot;&gt;
+&lt;/gist&gt;
+
+&lt;p&gt;Next thing to change it’s pretty straight forward: at line 4, set the domain for which to update the DNS records. In our example, this is &lt;code class=&quot;highlighter-rouge&quot;&gt;example.com&lt;/code&gt;.&lt;/p&gt;
+
+&lt;gist id=&quot;gist-aa01a6093a52b3fc7f6e91852beb9b69&quot; data-file=&quot;update-ddns-filled.sh&quot; data-line=&quot;4&quot; data-showFooter=&quot;false&quot;&gt;
+&lt;/gist&gt;
+
+&lt;p&gt;Lastly, we’ll need to tell our script what are the ids for the DNS records. For this, we’ll use this little script to list all our DigitalOcean DNS records for our domain:&lt;/p&gt;
+
+&lt;gist id=&quot;gist-aa01a6093a52b3fc7f6e91852beb9b69&quot; data-file=&quot;get_dns.sh&quot;&gt;&lt;/gist&gt;
+
+&lt;p&gt;At the top of this script, just change the &lt;code class=&quot;highlighter-rouge&quot;&gt;ACCESS_TOKEN&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;DOMAIN&lt;/code&gt; to match our initial script.&lt;/p&gt;
+
+&lt;p&gt;The output of this script will be groups of three key/value pairs: the &lt;code class=&quot;highlighter-rouge&quot;&gt;id&lt;/code&gt; of the record, the &lt;code class=&quot;highlighter-rouge&quot;&gt;type&lt;/code&gt; of the record and &lt;code class=&quot;highlighter-rouge&quot;&gt;data&lt;/code&gt;, which is the value of the record.&lt;/p&gt;
+
+&lt;p&gt;This is the output for our example:&lt;/p&gt;
+
+&lt;gist id=&quot;gist-aa01a6093a52b3fc7f6e91852beb9b69&quot; data-file=&quot;get_dns_output.txt&quot;&gt;&lt;/gist&gt;
+
+&lt;p&gt;From this, we only care about the &lt;code class=&quot;highlighter-rouge&quot;&gt;id&lt;/code&gt; of our &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; DNS records. From the above output we can determine that those IDs are &lt;code class=&quot;highlighter-rouge&quot;&gt;76145698&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;76145705&lt;/code&gt;. So we change our initial script accordingly:&lt;/p&gt;
+
+&lt;gist id=&quot;gist-aa01a6093a52b3fc7f6e91852beb9b69&quot; data-file=&quot;update-ddns-filled.sh&quot; data-line=&quot;5&quot; data-showFooter=&quot;false&quot;&gt;
+&lt;/gist&gt;
+
+&lt;p&gt;Our DNS update script should be looking like this:&lt;/p&gt;
+
+&lt;gist id=&quot;gist-aa01a6093a52b3fc7f6e91852beb9b69&quot; data-file=&quot;update-ddns-filled.sh&quot;&gt;
+&lt;/gist&gt;
+
+&lt;p&gt;As for what the script actually does:&lt;/p&gt;
+
+&lt;gist id=&quot;gist-aa01a6093a52b3fc7f6e91852beb9b69&quot; data-file=&quot;update-ddns-filled.sh&quot; data-line=&quot;7&quot; data-showFooter=&quot;false&quot;&gt;
+&lt;/gist&gt;
+
+&lt;p&gt;The above gets your current IP using an Amazon AWS service. For alternative services, you can consult &lt;a href=&quot;https://openwrt.org/docs/guide-user/services/ddns/client#detecting_public_ip&quot;&gt;this list on OpenWRT&lt;/a&gt;.&lt;/p&gt;
+
+&lt;gist id=&quot;gist-aa01a6093a52b3fc7f6e91852beb9b69&quot; data-file=&quot;update-ddns-filled.sh&quot; data-line=&quot;9-18&quot; data-showFooter=&quot;false&quot;&gt;
+&lt;/gist&gt;
+
+&lt;p&gt;The above will call the DigitalOcean API for each record id that you have defined at line 5, as documented in &lt;a href=&quot;https://developers.digitalocean.com/documentation/v2/#update-a-domain-record&quot;&gt;DigitalOcean’s API documentation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can now give it a quick test to see if it works as intended. Execute the script in your terminal by typing &lt;code class=&quot;highlighter-rouge&quot;&gt;./update-ddns.sh&lt;/code&gt;. If it worked correctly, you should now see the DNS records updated on DigitalOcean.&lt;/p&gt;
+
+&lt;p&gt;Seeing the script works, we can set it as a &lt;code class=&quot;highlighter-rouge&quot;&gt;cron&lt;/code&gt; job so it will update the DNS every 20 minutes.&lt;/p&gt;
+
+&lt;p&gt;Adding the following line in your &lt;code class=&quot;highlighter-rouge&quot;&gt;crontab&lt;/code&gt; will do just that:&lt;/p&gt;
+
+&lt;gist id=&quot;gist-aa01a6093a52b3fc7f6e91852beb9b69&quot; data-file=&quot;cron&quot; data-line=&quot;1&quot; data-showFooter=&quot;false&quot;&gt;
+&lt;/gist&gt;
+
+&lt;p&gt;And just like that we have our own dynamic DNS system up and running.&lt;/p&gt;
+
+&lt;p&gt;Alternatively to the &lt;code class=&quot;highlighter-rouge&quot;&gt;cron&lt;/code&gt; solution, if you have an Asus router and you can run &lt;a href=&quot;https://www.asuswrt-merlin.net/&quot;&gt;Asuswrt-Merlin firmware&lt;/a&gt; on it, you could set the DNS update script to be executed by the router every time your IP changes. Please see &lt;a href=&quot;https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS&quot;&gt;their docs&lt;/a&gt; and the &lt;a href=&quot;https://github.com/RMerl/asuswrt-merlin/wiki/DDNS-Sample-Scripts#digitalocean&quot;&gt;adaptation of our script&lt;/a&gt; in order to achieve this.&lt;/p&gt;
+
+&lt;p&gt;Others routers should support this, so check your router’s manual to see if you can set up a custom dynamic DNS script on your router.&lt;/p&gt;
+
+&lt;p&gt;Hope this helps ✌️&lt;/p&gt;
+</description>
+				<pubDate>Sun, 28 Jul 2019 00:00:00 +0300</pubDate>
+				<link>http://surdu.me//2019/07/28/digital-ocean-ddns.html</link>
+				<guid isPermaLink="true">http://surdu.me//2019/07/28/digital-ocean-ddns.html</guid>
+				
+				<category>web</category>
+				
+				
+			</item>
+		
+			<item>
+				<title>Disable Margin Collapse in CSS with No Visual Impact</title>
+				<description>&lt;p&gt;When working with CSS you sometimes have to work around a behaviour known as &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing&quot;&gt;margin collapsing&lt;/a&gt;. Basically, the top/bottom margin of two neighboring block elements will be set to the biggest margin value in-between the two elements, if their top/bottom margins are adjacent and no text, clearance, padding nor border separate them.&lt;/p&gt;
+
+&lt;p&gt;Let’s say we want to have a green box inside a red box and the green box to be 50 pixels down inside the red box.&lt;/p&gt;
+
+&lt;p&gt;If we just add &lt;code class=&quot;highlighter-rouge&quot;&gt;margin-top: 50px;&lt;/code&gt; to the inside green box we’ll soon realize that the result is not as intended:&lt;/p&gt;
+
+&lt;p data-height=&quot;275&quot; data-theme-id=&quot;dark&quot; data-slug-hash=&quot;QppVGv&quot; data-default-tab=&quot;css,result&quot; data-user=&quot;surdu&quot; data-embed-version=&quot;2&quot; data-pen-title=&quot;No border collapse example&quot; class=&quot;codepen&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that the top-margin of the green children element seems to be passed on to the red parent.&lt;/p&gt;
+
+&lt;p&gt;The most common method of preventing this is to use &lt;code class=&quot;highlighter-rouge&quot;&gt;overflow: hidden;&lt;/code&gt; on the parent element. Other methods include adding &lt;code class=&quot;highlighter-rouge&quot;&gt;float&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;border&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;padding&lt;/code&gt; or something else that will separate the two margins.&lt;/p&gt;
+
+&lt;p&gt;But if we don’t want to change the way the parent acts and looks, all of the above methods will not work for us.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-solution&quot;&gt;The solution&lt;/h3&gt;
+&lt;p&gt;Sub-pixels values to the rescue !&lt;/p&gt;
+
+&lt;p&gt;What we can do is set top/bottom padding to a value that is greater than 0 pixels, so that margin collapsing is not applied, but also less than 1 pixels so the browser doesn’t render anything.&lt;/p&gt;
+
+&lt;p&gt;After running a &lt;a href=&quot;http://codepen.io/surdu/pen/GWMNZK&quot;&gt;quick test&lt;/a&gt; on a variety of browser and screen density combinations I’ve come to the conclusion that &lt;code class=&quot;highlighter-rouge&quot;&gt;0.05px&lt;/code&gt; is our best bet in order to not render anything.&lt;/p&gt;
+
+&lt;p&gt;I would say &lt;code class=&quot;highlighter-rouge&quot;&gt;0.1px&lt;/code&gt; it’s still a good choice if you set it on only one side, but Firefox seems to render the accumulated 0.2 pixels on retina displays if you set the padding on both top and bottom.&lt;/p&gt;
+
+&lt;p&gt;So let’s apply this to our example:&lt;/p&gt;
+&lt;p data-height=&quot;309&quot; data-theme-id=&quot;0&quot; data-slug-hash=&quot;mWqYdQ&quot; data-default-tab=&quot;css,result&quot; data-user=&quot;surdu&quot; data-embed-version=&quot;2&quot; data-pen-title=&quot;Border collapse fix&quot; class=&quot;codepen&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;As you can see, after applying the 0.05 pixels padding to the parent element’s top and bottom, now the margin  of the children element is applied as we initially intended.&lt;/p&gt;
+
+&lt;p&gt;In order to make sure this doesn’t have any visual impact, I encourage you to run the &lt;a href=&quot;http://codepen.io/surdu/pen/GWMNZK&quot;&gt;above mentioned test&lt;/a&gt; on your combination of browser and screen density. The solution will have no visual impact if the last green box with the &lt;code class=&quot;highlighter-rouge&quot;&gt;0.05px&lt;/code&gt; text in it has no red borders on top and bottom.&lt;/p&gt;
+
+&lt;p&gt;If you find a context in which this solution fails, please let me know in the comments below.&lt;/p&gt;
+
+&lt;script async=&quot;&quot; src=&quot;https://production-assets.codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Hope this helps 👍&lt;/p&gt;
+</description>
+				<pubDate>Mon, 10 Apr 2017 00:00:00 +0300</pubDate>
+				<link>http://surdu.me//2017/04/10/disable-margin-collapse.html</link>
+				<guid isPermaLink="true">http://surdu.me//2017/04/10/disable-margin-collapse.html</guid>
+				
+				<category>web</category>
+				
+				
+			</item>
+		
+			<item>
+				<title>How to Set a Variable in Django Template</title>
+				<description>&lt;p&gt;As you may have figured by now, Django does not implement such a feature. That is, because the logic of setting the variable must go in the view, not in the template. But there are some rare cases when you actually need this.&lt;/p&gt;
+
+&lt;p&gt;The way you can solve this is by using a &lt;a href=&quot;https://docs.djangoproject.com/en/2.1/howto/custom-template-tags/#writing-custom-template-tags&quot;&gt;custom Django template tag&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;To do this, you create a file called &lt;code class=&quot;highlighter-rouge&quot;&gt;set_var.py&lt;/code&gt; in &lt;a href=&quot;https://docs.djangoproject.com/en/2.1/howto/custom-template-tags/#code-layout&quot;&gt;your &lt;code class=&quot;highlighter-rouge&quot;&gt;templatetags&lt;/code&gt; folder&lt;/a&gt; that contains the following code:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/surdu/c9970da44dcaef6b18fee40dfcbabcd3.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Then to use this in your template, you just do the following:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/surdu/fe0e1b48661541d29156798be462f428.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;As you can see, you can put in your variables anything that you could normally get inside a Django template: a number, another context variable, a string, etc.&lt;/p&gt;
+
+&lt;p&gt;Hope it helps 😉&lt;/p&gt;
+</description>
+				<pubDate>Fri, 18 Feb 2011 00:00:00 +0200</pubDate>
+				<link>http://surdu.me//2011/02/18/set-variable-django-template.html</link>
+				<guid isPermaLink="true">http://surdu.me//2011/02/18/set-variable-django-template.html</guid>
+				
+				<category>web</category>
+				
+				<category>python</category>
+				
+				
+			</item>
+		
+			<item>
+				<title>Capture the Output of a Django Command</title>
+				<description>&lt;p&gt;The documentation is very slim when it talks about &lt;a href=&quot;https://docs.djangoproject.com/en/2.1/ref/django-admin/#running-management-commands-from-your-code&quot;&gt;how to call a Django command from code&lt;/a&gt;. In order to do this, just use &lt;code class=&quot;highlighter-rouge&quot;&gt;call_command&lt;/code&gt;. To solve the trick of capturing the output of this I had to dig a little into the Django source.&lt;/p&gt;
+
+&lt;p&gt;The solution to capturing the output of the command being called is passing to &lt;code class=&quot;highlighter-rouge&quot;&gt;call_command&lt;/code&gt; an argument called &lt;code class=&quot;highlighter-rouge&quot;&gt;stdout&lt;/code&gt; to which you assign where the output is written (a file or any bite stream). Here is an example:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/surdu/5db721a9970b3e59af82af932d73c4d1.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;In the above example we call &lt;code class=&quot;highlighter-rouge&quot;&gt;python manage.py dumpdata&lt;/code&gt;, which will output all the data from all the models in all the installed apps from the current project in form of a JSON.&lt;/p&gt;
+
+&lt;p&gt;Hope it helps 😉&lt;/p&gt;
+</description>
+				<pubDate>Sun, 06 Feb 2011 00:00:00 +0200</pubDate>
+				<link>http://surdu.me//2011/02/06/capture-output-django-command.html</link>
+				<guid isPermaLink="true">http://surdu.me//2011/02/06/capture-output-django-command.html</guid>
+				
+				<category>web</category>
+				
+				<category>python</category>
+				
+				
+			</item>
+		
+			<item>
+				<title>How Does Shazam Work ?</title>
+				<description>&lt;p&gt;What is Shazam, you may ask ? Let’s say you’re in a bar, and they play a song that you like and you don’t know its name ? Shazam can help you find out what is the name of that song.&lt;/p&gt;
+
+&lt;p&gt;What Shazam does, it lets you record up to 15 seconds of the song you are hearing and then it will tell you everything you want to know about that song: the artist, the name of the song, the album, offer you links to YouTube, to buy the song on iTunes, you name it.&lt;/p&gt;
+
+&lt;p&gt;Shazam was first offered in UK as a phone service over the GSM network, but now it’s available world-wide on smart phones. But this is not the wow part of the app. What is the most amazing thing, is the conditions in which it can detect the song it “hears”: it can detect the song recorded in heavy background noise conditions (like a crowded bar, as I initially mentioned) and even when the recorded sound quality is very low (it can run over cellular phone network). It is so amazing, that it can distinguish a songs when 2 songs are playing simultaneously or when the song is in the background of a radio DJ.&lt;/p&gt;
+
+&lt;p&gt;So, how does it manage to do this? &lt;em&gt;Avery Li-Chun Wang&lt;/em&gt;, chief scientist and co-founder of Shazam, published &lt;a href=&quot;http://www.ee.columbia.edu/~dpwe/papers/Wang03-shazam.pdf&quot;&gt;a paper that explains just that&lt;/a&gt;. In a few words, it has a database of song fingerprints generated out of their spectrogram. When you record a sample with their app, they will generate a fingerprint for the recorded sample in the same way they did for all the songs in their database. After that they will try to find a match in their database for the sample.&lt;/p&gt;
+
+&lt;p&gt;In the next lines I will try to explain in simple terms what I understood from that paper.&lt;/p&gt;
+
+&lt;h3 id=&quot;how-to-fingerprint-a-song&quot;&gt;How to fingerprint a song&lt;/h3&gt;
+
+&lt;p&gt;First they generate a &lt;a href=&quot;https://en.wikipedia.org/wiki/Spectrogram&quot;&gt;spectrogram&lt;/a&gt; for the song. The spectrogram is a 3 dimensions graph. On the horizontal (&lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt;) axis, you have the time. On the vertical (&lt;code class=&quot;highlighter-rouge&quot;&gt;Y&lt;/code&gt;) axis you have the frequency. The third dimension is represented by color intensity and it denotes the amplitude of a certain frequency.&lt;/p&gt;
+
+&lt;p&gt;Basically, a dot on the graph will represent the volume of a certain sound at a certain time in the song. A darker point means that the specific sound is louder than a lighter point.&lt;/p&gt;
+
+&lt;p&gt;Storing the full song in the database will occupy an enormous amount of space, considering that the Shazam database has more than 8 million songs. So instead, they will store only the intense sounds in the song, the time when they appear in the song and at which frequency.&lt;/p&gt;
+
+&lt;p&gt;So a spectrogram for a song will be transformed from this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/shazam/1.png&quot; alt=&quot;The initial spectrogram&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;into this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/shazam/2.png&quot; alt=&quot;The simplified spectrogram&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that the darker spots in the spectrogram match the crosses in the second image.&lt;/p&gt;
+
+&lt;p&gt;To store this in the database in a way in which is efficient to search for a match (easy to index), they choose some of the points from within the simplified spectrogram, called &lt;em&gt;anchor points&lt;/em&gt; and zones in the vicinity of them, called &lt;em&gt;target zone&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/shazam/3.png&quot; alt=&quot;Pairing the anchor point with points in a target zone&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, for each point in the target zone, they will create a &lt;a href=&quot;https://en.wikipedia.org/wiki/Hash_function&quot;&gt;hash&lt;/a&gt; that will be the aggregation of the following: the frequency at which the anchor point is located (&lt;code class=&quot;highlighter-rouge&quot;&gt;f1&lt;/code&gt;) + the frequency at which the point in the target zone is located (&lt;code class=&quot;highlighter-rouge&quot;&gt;f2&lt;/code&gt;)+ the time difference between the time when the point in the target zone is located in the song (&lt;code class=&quot;highlighter-rouge&quot;&gt;t2&lt;/code&gt;) and the time when the anchor point is located in the song &lt;code class=&quot;highlighter-rouge&quot;&gt;(t1) + t1&lt;/code&gt;. To simplify: &lt;code class=&quot;highlighter-rouge&quot;&gt;hash = (f1+f2+(t2-t1))+t1&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/shazam/4.png&quot; alt=&quot;How the hash is calculated&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After this, they will store each hash generated like this in the database.&lt;/p&gt;
+
+&lt;h3 id=&quot;detecting-the-song&quot;&gt;Detecting the song&lt;/h3&gt;
+
+&lt;p&gt;They first repeat the same fingerprinting also to the recorded sample. Each hash generated from the sample sound, will be searched for a match in the database.&lt;/p&gt;
+
+&lt;p&gt;If a match is found you will have the time of the hash from the sample (&lt;code class=&quot;highlighter-rouge&quot;&gt;th1&lt;/code&gt;), the time of the hash from the song in the database (&lt;code class=&quot;highlighter-rouge&quot;&gt;th2&lt;/code&gt;) and implicitly the ID of the song for which the hash matched. Basically, &lt;code class=&quot;highlighter-rouge&quot;&gt;th1&lt;/code&gt; is the time since the beginning of the sample until the time of the sample hash and &lt;code class=&quot;highlighter-rouge&quot;&gt;th2&lt;/code&gt; is the time since the beginning of the song and the time of the song hash.&lt;/p&gt;
+
+&lt;p&gt;Now, they will draw a new graph called scatter graph. The graph will have on the horizontal axis (X) the time of the song in the database and on the vertical axis (Y) the time of the recorded sample. On the X axis we will mark &lt;code class=&quot;highlighter-rouge&quot;&gt;th2&lt;/code&gt; and on the Y axis we will mark &lt;code class=&quot;highlighter-rouge&quot;&gt;th1&lt;/code&gt;. The point of intersection of the two occurrence times (&lt;code class=&quot;highlighter-rouge&quot;&gt;th1&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;th2&lt;/code&gt;) will be marked with a small circle.&lt;/p&gt;
+
+&lt;p&gt;The magic happens now: if the graph will contain a lot of pairs of &lt;code class=&quot;highlighter-rouge&quot;&gt;th1&lt;/code&gt;‘s and &lt;code class=&quot;highlighter-rouge&quot;&gt;th2&lt;/code&gt;‘s from the same song, a diagonal line will form. The idea behind the formation of that line is simple: the rate at which the peaks (the small crosses from the simplified spectrogram) in the database song appear will be the same rate in which the peaks appear in the recorded sample, so if you pair these times, the coordinates on the scatter graph will grow constantly (to the right-top of the graph) as the time passes on both axes.&lt;/p&gt;
+
+&lt;p&gt;Here is how a scatter graph will look for a non-matching run&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/shazam/plot_bad.png&quot; alt=&quot;Scatter graph of a non-matching run&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;versus how it will look for a matching run&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/shazam/plot_ok.png&quot; alt=&quot;Scatter graph of a matching run&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Finally, they will calculate a difference between &lt;code class=&quot;highlighter-rouge&quot;&gt;th2&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;th1&lt;/code&gt; (&lt;code class=&quot;highlighter-rouge&quot;&gt;dth&lt;/code&gt;) and they will plot it in a &lt;a href=&quot;https://en.wikipedia.org/wiki/Histogram&quot;&gt;histogram&lt;/a&gt;. If there is a match in the graph plotted, then there will be a lot of &lt;code class=&quot;highlighter-rouge&quot;&gt;dth&lt;/code&gt;s with the same value, because, basically, subtracting the &lt;code class=&quot;highlighter-rouge&quot;&gt;th2&lt;/code&gt; from &lt;code class=&quot;highlighter-rouge&quot;&gt;th1&lt;/code&gt; will give the offset from where the sample was recorded (the difference between a point in the original song and the same point in the recorded sample). This will result in a peak within the histogram, which will confirm a match.&lt;/p&gt;
+
+&lt;p&gt;Here is how a histogram for a non-matching run will look like&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/shazam/his_bad.png&quot; alt=&quot;Histogram of a non-matching run&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;versus a histogram for a matching run&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/shazam/his_ok.png&quot; alt=&quot;Histogram of a matching run&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;That’s pretty much all the info I could get from the paper. If I missed something or you have other interesting facts about this, tell us in the comments.&lt;/p&gt;
+
+&lt;p&gt;Hope it helps 😉&lt;/p&gt;
+</description>
+				<pubDate>Thu, 20 Jan 2011 00:00:00 +0200</pubDate>
+				<link>http://surdu.me//2011/01/20/how-does-shazam-work.html</link>
+				<guid isPermaLink="true">http://surdu.me//2011/01/20/how-does-shazam-work.html</guid>
+				
+				
+			</item>
+		
+			<item>
+				<title>Make LineString Resolution Depend on Zoom Level in OpenLayers</title>
+				<description>&lt;p&gt;So, you want to render a route on your OpenLayers map. Everything will be nice and sweet until you’ll have to render a huge route, in which case no matter what computer your clients have, most probably it will stall. To solve this you have two possibilities: you either reduce the number of lines you send from the server or you reduce the number of points rendered directly on the client’s browser.&lt;/p&gt;
+
+&lt;p&gt;Both solutions will raise a problem: if the user will zoom deep enough, they will see a discrepancy between the route and the road (the number of points in the route will not be equal with the number of point on the road). So, the road may do a turn where your route plotting will just cut the corner. To solve this, I found a very adaptive solution that will reduce the number of point in your route the further you zoom out.&lt;/p&gt;
+
+&lt;p&gt;The solution is to create a custom renderer. In the following example it is shown how to override the default behaviour for the SVG renderer, but you can implement it also for other renderer if required.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/surdu/1e298cff07ed81c7c0c562956019b76b.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;The way I determine by how much to reduce the number of points based on the zoom is simple: I just have an array of zoom factors. If the user zoom to level &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; it just looks which is the closest value to &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; defined in my array.&lt;/p&gt;
+
+&lt;p&gt;Ok, so after you’ve defined your new renderer, it’s time to use it on your map. The way to do this is to add it to your vector layer that you use to render your route like so:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/surdu/ca21acb448fa75d5b61f27d71e3ac245.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;You just have to add the name of your render class as a string. The default list of renderers where &lt;code class=&quot;highlighter-rouge&quot;&gt;['SVG', 'VML', 'Canvas']&lt;/code&gt;. So you noticed how I’ve changed only the SVG with my renderer. That is because browsers like Internet Explorer does not support SVG. This way, if OpenLayers sees that it can not use our &lt;code class=&quot;highlighter-rouge&quot;&gt;Smart&lt;/code&gt; renderer, it will proceed with the next one in the list until it finds one that it can use.&lt;/p&gt;
+
+&lt;p&gt;Of course, if the browser will use &lt;code class=&quot;highlighter-rouge&quot;&gt;VML&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;Canvas&lt;/code&gt;, you’ll have again this problem, so you may want to implement this solution also for the other renderers. I suspect it’s just a matter of changing the class your renderer extends, but I didn’t tried it yet.&lt;/p&gt;
+
+&lt;p&gt;Hope it helps 😉&lt;/p&gt;
+</description>
+				<pubDate>Mon, 20 Dec 2010 00:00:00 +0200</pubDate>
+				<link>http://surdu.me//2010/12/20/make-linestring-resolution-depend-on-level-in-openlayers.html</link>
+				<guid isPermaLink="true">http://surdu.me//2010/12/20/make-linestring-resolution-depend-on-level-in-openlayers.html</guid>
+				
+				<category>web</category>
+				
+				
+			</item>
+		
+	</channel>
+</rss>

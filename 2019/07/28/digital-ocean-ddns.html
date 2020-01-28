@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png?v">
+	<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+	<link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+
+	<title>Use DigitalOcean as Dynamic DNS | Nicu Surdu</title>
+
+	
+
+	<meta name="description" content="I have a server at my home on which I host various test projects and I needed a dynamic DNS service as my ISP assigns me an IP dynamically. Tried some dynamic DNS services, but their domain names tend to get long, and I don’t like typing URLS. So I decided to buy a domain and handle the DNS update myself." />
+
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Use DigitalOcean as Dynamic DNS" />
+	<meta property="og:description" content="I have a server at my home on which I host various test projects and I needed a dynamic DNS service as my ISP assigns me an IP dynamically. Tried some dynamic DNS services, but their domain names tend to get long, and I don’t like typing URLS. So I decided to buy a domain and handle the DNS update myself." />
+	<meta property="og:url" content="http://surdu.me/2019/07/28/digital-ocean-ddns.html" />
+	<meta property="og:site_name" content="Nicu Surdu" />
+
+	<meta name="twitter:title" content="Use DigitalOcean as Dynamic DNS" />
+	<meta name="twitter:description" content="I have a server at my home on which I host various test projects and I needed a dynamic DNS service as my ISP assigns me an IP dynamically. Tried some dynamic DNS services, but their domain names tend to get long, and I don’t like typing URLS. So I decided to buy a domain and handle the DNS update myself." />
+	<meta name="twitter:creator" content="@surdume" />
+	<meta name="twitter:site" content="@surdume" />
+	<meta name="twitter:domain" content="surdu.me" />
+	
+	<meta property="og:image" content="http://surdu.me/assets/images/profile.jpg" />
+	<meta property="og:image:secure_url" content="http://surdu.me/assets/images/profile.jpg" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:image" content="http://surdu.me/assets/images/profile.jpg" />
+	
+	
+
+	<meta name="google-site-verification" content="qS6PD1v2cPj6gw4QeROZgOtRiolrbkSBHAJ7V9RCpFs" />
+	<meta name="HandheldFriendly" content="True" />
+	<meta name="MobileOptimized" content="320" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#000000" />
+
+	<link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+	<link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+</head>
+<body class="post-template">
+
+	<header class="main-header post-head no-cover">
+	<nav class="main-nav  clearfix">
+		<a class="back-button icon-arrow-left" href="/">Home</a>
+		<a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+	</nav>
+</header>
+
+<main class="content" role="main">
+
+	<article class="post">
+
+		<header class="post-header">
+			<h1 class="post-title">Use DigitalOcean as Dynamic DNS</h1>
+			<section class="post-meta">
+				<time class="post-date" datetime="2019-07-28">28 Jul 2019</time>
+				
+	in
+	
+		<a class='post' href='/tag/web'>#web</a>
+	
+
+
+			</section>
+		</header>
+
+		<section class="post-content">
+			<p>I have a server at my home on which I host various test projects and I needed a dynamic DNS service as my ISP assigns me an IP dynamically. Tried some dynamic DNS services, but their domain names tend to get long, and I don’t like typing URLS. So I decided to buy a domain and handle the DNS update myself.</p>
+
+<p>What we’ll do is a script that finds out what our IP is and then tells it to DigitalOcean. This script will run at a specified interval on our server.</p>
+
+<p>For this you’ll need a UNIX machine, a <a href="https://www.digitalocean.com/">DigitalOcean</a> account and a domain pointed to DigitalOcean’s Nameservers.</p>
+
+<p>To see how to point your domain to DigitalOcean check <a href="https://www.digitalocean.com/community/tutorials/how-to-point-to-digitalocean-nameservers-from-common-domain-registrars">this article</a> or check with your domain’s registrar on how to do it, as it vary from one to another.</p>
+
+<p>Also, we’ll use <code class="highlighter-rouge">cron</code> in this tutorial, so if you’re not familiar with it please read <a href="https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-on-a-vps">this tutorial</a> before.</p>
+
+<p>I will not cover in detail what needs to be done on DigitalOcean’s side, as their documentations covers it already. I’ll mostly list the steps needed along with the links in their documentation:</p>
+
+<ol>
+  <li><a href="https://www.digitalocean.com/docs/api/create-personal-access-token/">Generate an access token</a></li>
+  <li><a href="https://www.digitalocean.com/docs/projects/how-to/create/">Create a project</a></li>
+  <li><a href="https://www.digitalocean.com/docs/networking/dns/how-to/add-domains/">Add domains to the created project</a></li>
+  <li><a href="https://www.digitalocean.com/docs/networking/dns/how-to/manage-records/#a-records">Add at least one <code class="highlighter-rouge">A</code> record to your DNS records</a>.</li>
+</ol>
+
+<p>In my case, I added two <code class="highlighter-rouge">A</code> DNS records:</p>
+
+<p><img src="/assets/images/do-dns/records.jpg" alt="Example records" /></p>
+
+<p>The first one is the required one, and will point <code class="highlighter-rouge">example.com</code> domain to my machine. The second one will point all sub-domains of <code class="highlighter-rouge">example.com</code> (like <code class="highlighter-rouge">test.example.com</code>) to my machine.</p>
+
+<p>For the first one enter <code class="highlighter-rouge">@</code> in the <code class="highlighter-rouge">Hostname</code> field when you create the record, and for the second one enter <code class="highlighter-rouge">*</code>. As for the IP, it doesn’t matter what you enter as it will be automatically updated later by our script.</p>
+
+<p>This should be all that you need to do on the side of DigitalOcean.</p>
+
+<p>Now let’s write a bash script that will update DigitalOcean’s DNS records with our IP.</p>
+
+<p>Create a file called <code class="highlighter-rouge">update-dns.sh</code> with the following contents:</p>
+
+<gist id="gist-aa01a6093a52b3fc7f6e91852beb9b69" data-file="update-ddns.sh"></gist>
+
+<p>After you created the file, let’s give it execution rights by executing the following in your terminal:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x update-dns.sh
+</code></pre></div></div>
+
+<p>Now let’s go step by step and see what we need to change and what the script actually does.</p>
+
+<p>The things we need to change are at the top of the file. We’ll start by changing line 3 where we need to add the access token that we generated above in step 1 on DigitalOcean. Should look something like this:</p>
+
+<gist id="gist-aa01a6093a52b3fc7f6e91852beb9b69" data-file="update-ddns-filled.sh" data-line="3" data-showFooter="false">
+</gist>
+
+<p>Next thing to change it’s pretty straight forward: at line 4, set the domain for which to update the DNS records. In our example, this is <code class="highlighter-rouge">example.com</code>.</p>
+
+<gist id="gist-aa01a6093a52b3fc7f6e91852beb9b69" data-file="update-ddns-filled.sh" data-line="4" data-showFooter="false">
+</gist>
+
+<p>Lastly, we’ll need to tell our script what are the ids for the DNS records. For this, we’ll use this little script to list all our DigitalOcean DNS records for our domain:</p>
+
+<gist id="gist-aa01a6093a52b3fc7f6e91852beb9b69" data-file="get_dns.sh"></gist>
+
+<p>At the top of this script, just change the <code class="highlighter-rouge">ACCESS_TOKEN</code> and <code class="highlighter-rouge">DOMAIN</code> to match our initial script.</p>
+
+<p>The output of this script will be groups of three key/value pairs: the <code class="highlighter-rouge">id</code> of the record, the <code class="highlighter-rouge">type</code> of the record and <code class="highlighter-rouge">data</code>, which is the value of the record.</p>
+
+<p>This is the output for our example:</p>
+
+<gist id="gist-aa01a6093a52b3fc7f6e91852beb9b69" data-file="get_dns_output.txt"></gist>
+
+<p>From this, we only care about the <code class="highlighter-rouge">id</code> of our <code class="highlighter-rouge">A</code> DNS records. From the above output we can determine that those IDs are <code class="highlighter-rouge">76145698</code> and <code class="highlighter-rouge">76145705</code>. So we change our initial script accordingly:</p>
+
+<gist id="gist-aa01a6093a52b3fc7f6e91852beb9b69" data-file="update-ddns-filled.sh" data-line="5" data-showFooter="false">
+</gist>
+
+<p>Our DNS update script should be looking like this:</p>
+
+<gist id="gist-aa01a6093a52b3fc7f6e91852beb9b69" data-file="update-ddns-filled.sh">
+</gist>
+
+<p>As for what the script actually does:</p>
+
+<gist id="gist-aa01a6093a52b3fc7f6e91852beb9b69" data-file="update-ddns-filled.sh" data-line="7" data-showFooter="false">
+</gist>
+
+<p>The above gets your current IP using an Amazon AWS service. For alternative services, you can consult <a href="https://openwrt.org/docs/guide-user/services/ddns/client#detecting_public_ip">this list on OpenWRT</a>.</p>
+
+<gist id="gist-aa01a6093a52b3fc7f6e91852beb9b69" data-file="update-ddns-filled.sh" data-line="9-18" data-showFooter="false">
+</gist>
+
+<p>The above will call the DigitalOcean API for each record id that you have defined at line 5, as documented in <a href="https://developers.digitalocean.com/documentation/v2/#update-a-domain-record">DigitalOcean’s API documentation</a>.</p>
+
+<p>You can now give it a quick test to see if it works as intended. Execute the script in your terminal by typing <code class="highlighter-rouge">./update-ddns.sh</code>. If it worked correctly, you should now see the DNS records updated on DigitalOcean.</p>
+
+<p>Seeing the script works, we can set it as a <code class="highlighter-rouge">cron</code> job so it will update the DNS every 20 minutes.</p>
+
+<p>Adding the following line in your <code class="highlighter-rouge">crontab</code> will do just that:</p>
+
+<gist id="gist-aa01a6093a52b3fc7f6e91852beb9b69" data-file="cron" data-line="1" data-showFooter="false">
+</gist>
+
+<p>And just like that we have our own dynamic DNS system up and running.</p>
+
+<p>Alternatively to the <code class="highlighter-rouge">cron</code> solution, if you have an Asus router and you can run <a href="https://www.asuswrt-merlin.net/">Asuswrt-Merlin firmware</a> on it, you could set the DNS update script to be executed by the router every time your IP changes. Please see <a href="https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS">their docs</a> and the <a href="https://github.com/RMerl/asuswrt-merlin/wiki/DDNS-Sample-Scripts#digitalocean">adaptation of our script</a> in order to achieve this.</p>
+
+<p>Others routers should support this, so check your router’s manual to see if you can set up a custom dynamic DNS script on your router.</p>
+
+<p>Hope this helps ✌️</p>
+
+		</section>
+
+		
+
+		<footer class="post-footer">
+			<!-- If we want to display author's name and bio -->
+			
+				<figure class="author-image">
+					<a class="img"
+						href="/about.html"
+						aria-label="About Nicu Surdu"
+						style="background-image: url(/assets/images/profile.jpg)">
+					<span class="hidden">Nicu Surdu's Picture</span></a>
+				</figure>
+				<section class="author">
+					<!-- Author Name -->
+					<div class="post-footer-title">Nicu Surdu</div>
+					<!-- Author Bio -->
+					<p>
+							Technical Lead at <a href="https://www.3pillarglobal.com/">3Pillar Global</a> <br />
+							and co-founder of <a href="http://creativespace.ro/">Creative Space</a>, a cool makerspace in Timișoara, Romania.
+					</p>
+				</section>
+			
+
+			<!-- Share links section -->
+			<section class="share">
+	<div class="post-footer-title">Share this post</div>
+	<a class="icon-twitter"
+		href="http://twitter.com/share?text=Use DigitalOcean as Dynamic DNS&amp;url=http://surdu.me/2019/07/28/digital-ocean-ddns.html"
+		aria-label="Share on Twitter"
+		onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+	</a>
+	<a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://surdu.me/2019/07/28/digital-ocean-ddns.html"
+		aria-label="Share on Facebook"
+		onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+	</a>
+	<a class="icon-google-plus"
+		href="https://plus.google.com/share?url=http://surdu.me/2019/07/28/digital-ocean-ddns.html"
+		aria-label="Share on Google+"
+		onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+	</a>
+</section>
+
+		</footer>
+
+		<!-- Disqus comments -->
+		
+				<section class="disqus">
+ <h3>Comments</h3>
+	<div id="disqus_thread"></div>
+	<script>
+		var disqus_config = function () {
+			this.page.url = "http://surdu.me/2019/07/28/digital-ocean-ddns.html";
+			this.page.identifier = "/2019/07/28/digital-ocean-ddns.html";
+		};
+
+		(function() {
+			var d = document, s = d.createElement('script');
+			s.src = 'https://surdu-me.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+	</script>
+</section>
+
+		
+
+	</article>
+
+</main>
+
+	<footer class="site-footer clearfix" aria-disabled="true">
+		<section class="copyright">
+			<b>Nicu Surdu</b> &copy; 2020
+		</section>
+		<section class="poweredby">
+			<a href="http://github.com/rosario/kasper">Kasper theme</a>
+		</section>
+	</footer>
+
+	<script type="text/javascript" src="/assets/js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+	<script type="text/javascript" src="/assets/js/index.js"></script>
+	<script type="text/javascript" src="/assets/js/gist-embed.js"></script>
+	<script type="text/javascript" src="/assets/js/favicon.js"></script><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-19732240-4"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'UA-19732240-4');
+</script>
+</body>
+</html>

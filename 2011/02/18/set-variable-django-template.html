@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png?v">
+	<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+	<link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+
+	<title>How to Set a Variable in Django Template | Nicu Surdu</title>
+
+	
+
+	<meta name="description" content="As you may have figured by now, Django does not implement such a feature. That is, because the logic of setting the variable must go in the view, not in the template. But there are some rare cases when you actually need this." />
+
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="How to Set a Variable in Django Template" />
+	<meta property="og:description" content="As you may have figured by now, Django does not implement such a feature. That is, because the logic of setting the variable must go in the view, not in the template. But there are some rare cases when you actually need this." />
+	<meta property="og:url" content="http://surdu.me/2011/02/18/set-variable-django-template.html" />
+	<meta property="og:site_name" content="Nicu Surdu" />
+
+	<meta name="twitter:title" content="How to Set a Variable in Django Template" />
+	<meta name="twitter:description" content="As you may have figured by now, Django does not implement such a feature. That is, because the logic of setting the variable must go in the view, not in the template. But there are some rare cases when you actually need this." />
+	<meta name="twitter:creator" content="@surdume" />
+	<meta name="twitter:site" content="@surdume" />
+	<meta name="twitter:domain" content="surdu.me" />
+	
+	<meta property="og:image" content="http://surdu.me/assets/images/profile.jpg" />
+	<meta property="og:image:secure_url" content="http://surdu.me/assets/images/profile.jpg" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:image" content="http://surdu.me/assets/images/profile.jpg" />
+	
+	
+
+	<meta name="google-site-verification" content="qS6PD1v2cPj6gw4QeROZgOtRiolrbkSBHAJ7V9RCpFs" />
+	<meta name="HandheldFriendly" content="True" />
+	<meta name="MobileOptimized" content="320" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#000000" />
+
+	<link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+	<link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+</head>
+<body class="post-template">
+
+	<header class="main-header post-head no-cover">
+	<nav class="main-nav  clearfix">
+		<a class="back-button icon-arrow-left" href="/">Home</a>
+		<a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+	</nav>
+</header>
+
+<main class="content" role="main">
+
+	<article class="post">
+
+		<header class="post-header">
+			<h1 class="post-title">How to Set a Variable in Django Template</h1>
+			<section class="post-meta">
+				<time class="post-date" datetime="2011-02-18">18 Feb 2011</time>
+				
+	in
+	
+		<a class='post' href='/tag/web'>#web</a>, 
+	
+		<a class='post' href='/tag/python'>#python</a>
+	
+
+
+			</section>
+		</header>
+
+		<section class="post-content">
+			<p>As you may have figured by now, Django does not implement such a feature. That is, because the logic of setting the variable must go in the view, not in the template. But there are some rare cases when you actually need this.</p>
+
+<p>The way you can solve this is by using a <a href="https://docs.djangoproject.com/en/2.1/howto/custom-template-tags/#writing-custom-template-tags">custom Django template tag</a>.</p>
+
+<p>To do this, you create a file called <code class="highlighter-rouge">set_var.py</code> in <a href="https://docs.djangoproject.com/en/2.1/howto/custom-template-tags/#code-layout">your <code class="highlighter-rouge">templatetags</code> folder</a> that contains the following code:</p>
+
+<script src="https://gist.github.com/surdu/c9970da44dcaef6b18fee40dfcbabcd3.js"></script>
+
+<p>Then to use this in your template, you just do the following:</p>
+
+<script src="https://gist.github.com/surdu/fe0e1b48661541d29156798be462f428.js"></script>
+
+<p>As you can see, you can put in your variables anything that you could normally get inside a Django template: a number, another context variable, a string, etc.</p>
+
+<p>Hope it helps 😉</p>
+
+		</section>
+
+		
+
+		<footer class="post-footer">
+			<!-- If we want to display author's name and bio -->
+			
+				<figure class="author-image">
+					<a class="img"
+						href="/about.html"
+						aria-label="About Nicu Surdu"
+						style="background-image: url(/assets/images/profile.jpg)">
+					<span class="hidden">Nicu Surdu's Picture</span></a>
+				</figure>
+				<section class="author">
+					<!-- Author Name -->
+					<div class="post-footer-title">Nicu Surdu</div>
+					<!-- Author Bio -->
+					<p>
+							Technical Lead at <a href="https://www.3pillarglobal.com/">3Pillar Global</a> <br />
+							and co-founder of <a href="http://creativespace.ro/">Creative Space</a>, a cool makerspace in Timișoara, Romania.
+					</p>
+				</section>
+			
+
+			<!-- Share links section -->
+			<section class="share">
+	<div class="post-footer-title">Share this post</div>
+	<a class="icon-twitter"
+		href="http://twitter.com/share?text=How to Set a Variable in Django Template&amp;url=http://surdu.me/2011/02/18/set-variable-django-template.html"
+		aria-label="Share on Twitter"
+		onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+	</a>
+	<a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://surdu.me/2011/02/18/set-variable-django-template.html"
+		aria-label="Share on Facebook"
+		onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+	</a>
+	<a class="icon-google-plus"
+		href="https://plus.google.com/share?url=http://surdu.me/2011/02/18/set-variable-django-template.html"
+		aria-label="Share on Google+"
+		onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+	</a>
+</section>
+
+		</footer>
+
+		<!-- Disqus comments -->
+		
+				<section class="disqus">
+ <h3>Comments</h3>
+	<div id="disqus_thread"></div>
+	<script>
+		var disqus_config = function () {
+			this.page.url = "http://surdu.me/2011/02/18/set-variable-django-template.html";
+			this.page.identifier = "/2011/02/18/set-variable-django-template.html";
+		};
+
+		(function() {
+			var d = document, s = d.createElement('script');
+			s.src = 'https://surdu-me.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+	</script>
+</section>
+
+		
+
+	</article>
+
+</main>
+
+	<footer class="site-footer clearfix" aria-disabled="true">
+		<section class="copyright">
+			<b>Nicu Surdu</b> &copy; 2020
+		</section>
+		<section class="poweredby">
+			<a href="http://github.com/rosario/kasper">Kasper theme</a>
+		</section>
+	</footer>
+
+	<script type="text/javascript" src="/assets/js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+	<script type="text/javascript" src="/assets/js/index.js"></script>
+	<script type="text/javascript" src="/assets/js/gist-embed.js"></script>
+	<script type="text/javascript" src="/assets/js/favicon.js"></script><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-19732240-4"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'UA-19732240-4');
+</script>
+</body>
+</html>

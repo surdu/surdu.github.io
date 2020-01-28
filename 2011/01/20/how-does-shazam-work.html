@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png?v">
+	<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+	<link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+
+	<title>How Does Shazam Work ? | Nicu Surdu</title>
+
+	
+
+	<meta name="description" content="What is Shazam, you may ask ? Let’s say you’re in a bar, and they play a song that you like and you don’t know its name ? Shazam can help you find out what is the name of that song." />
+
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="How Does Shazam Work ?" />
+	<meta property="og:description" content="What is Shazam, you may ask ? Let’s say you’re in a bar, and they play a song that you like and you don’t know its name ? Shazam can help you find out what is the name of that song." />
+	<meta property="og:url" content="http://surdu.me/2011/01/20/how-does-shazam-work.html" />
+	<meta property="og:site_name" content="Nicu Surdu" />
+
+	<meta name="twitter:title" content="How Does Shazam Work ?" />
+	<meta name="twitter:description" content="What is Shazam, you may ask ? Let’s say you’re in a bar, and they play a song that you like and you don’t know its name ? Shazam can help you find out what is the name of that song." />
+	<meta name="twitter:creator" content="@surdume" />
+	<meta name="twitter:site" content="@surdume" />
+	<meta name="twitter:domain" content="surdu.me" />
+	
+	<meta property="og:image" content="http://surdu.me/assets/images/shazam/1.png" />
+	<meta property="og:image:secure_url" content="http://surdu.me/assets/images/shazam/1.png" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:image" content="http://surdu.me/assets/images/shazam/1.png" />
+	
+	
+
+	<meta name="google-site-verification" content="qS6PD1v2cPj6gw4QeROZgOtRiolrbkSBHAJ7V9RCpFs" />
+	<meta name="HandheldFriendly" content="True" />
+	<meta name="MobileOptimized" content="320" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#000000" />
+
+	<link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+	<link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+</head>
+<body class="post-template">
+
+	<header class="main-header post-head no-cover">
+	<nav class="main-nav  clearfix">
+		<a class="back-button icon-arrow-left" href="/">Home</a>
+		<a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+	</nav>
+</header>
+
+<main class="content" role="main">
+
+	<article class="post">
+
+		<header class="post-header">
+			<h1 class="post-title">How Does Shazam Work ?</h1>
+			<section class="post-meta">
+				<time class="post-date" datetime="2011-01-20">20 Jan 2011</time>
+				
+
+			</section>
+		</header>
+
+		<section class="post-content">
+			<p>What is Shazam, you may ask ? Let’s say you’re in a bar, and they play a song that you like and you don’t know its name ? Shazam can help you find out what is the name of that song.</p>
+
+<p>What Shazam does, it lets you record up to 15 seconds of the song you are hearing and then it will tell you everything you want to know about that song: the artist, the name of the song, the album, offer you links to YouTube, to buy the song on iTunes, you name it.</p>
+
+<p>Shazam was first offered in UK as a phone service over the GSM network, but now it’s available world-wide on smart phones. But this is not the wow part of the app. What is the most amazing thing, is the conditions in which it can detect the song it “hears”: it can detect the song recorded in heavy background noise conditions (like a crowded bar, as I initially mentioned) and even when the recorded sound quality is very low (it can run over cellular phone network). It is so amazing, that it can distinguish a songs when 2 songs are playing simultaneously or when the song is in the background of a radio DJ.</p>
+
+<p>So, how does it manage to do this? <em>Avery Li-Chun Wang</em>, chief scientist and co-founder of Shazam, published <a href="http://www.ee.columbia.edu/~dpwe/papers/Wang03-shazam.pdf">a paper that explains just that</a>. In a few words, it has a database of song fingerprints generated out of their spectrogram. When you record a sample with their app, they will generate a fingerprint for the recorded sample in the same way they did for all the songs in their database. After that they will try to find a match in their database for the sample.</p>
+
+<p>In the next lines I will try to explain in simple terms what I understood from that paper.</p>
+
+<h3 id="how-to-fingerprint-a-song">How to fingerprint a song</h3>
+
+<p>First they generate a <a href="https://en.wikipedia.org/wiki/Spectrogram">spectrogram</a> for the song. The spectrogram is a 3 dimensions graph. On the horizontal (<code class="highlighter-rouge">X</code>) axis, you have the time. On the vertical (<code class="highlighter-rouge">Y</code>) axis you have the frequency. The third dimension is represented by color intensity and it denotes the amplitude of a certain frequency.</p>
+
+<p>Basically, a dot on the graph will represent the volume of a certain sound at a certain time in the song. A darker point means that the specific sound is louder than a lighter point.</p>
+
+<p>Storing the full song in the database will occupy an enormous amount of space, considering that the Shazam database has more than 8 million songs. So instead, they will store only the intense sounds in the song, the time when they appear in the song and at which frequency.</p>
+
+<p>So a spectrogram for a song will be transformed from this:</p>
+
+<p><img src="/assets/images/shazam/1.png" alt="The initial spectrogram" /></p>
+
+<p>into this:</p>
+
+<p><img src="/assets/images/shazam/2.png" alt="The simplified spectrogram" /></p>
+
+<p>Note that the darker spots in the spectrogram match the crosses in the second image.</p>
+
+<p>To store this in the database in a way in which is efficient to search for a match (easy to index), they choose some of the points from within the simplified spectrogram, called <em>anchor points</em> and zones in the vicinity of them, called <em>target zone</em>.</p>
+
+<p><img src="/assets/images/shazam/3.png" alt="Pairing the anchor point with points in a target zone" /></p>
+
+<p>Now, for each point in the target zone, they will create a <a href="https://en.wikipedia.org/wiki/Hash_function">hash</a> that will be the aggregation of the following: the frequency at which the anchor point is located (<code class="highlighter-rouge">f1</code>) + the frequency at which the point in the target zone is located (<code class="highlighter-rouge">f2</code>)+ the time difference between the time when the point in the target zone is located in the song (<code class="highlighter-rouge">t2</code>) and the time when the anchor point is located in the song <code class="highlighter-rouge">(t1) + t1</code>. To simplify: <code class="highlighter-rouge">hash = (f1+f2+(t2-t1))+t1</code></p>
+
+<p><img src="/assets/images/shazam/4.png" alt="How the hash is calculated" /></p>
+
+<p>After this, they will store each hash generated like this in the database.</p>
+
+<h3 id="detecting-the-song">Detecting the song</h3>
+
+<p>They first repeat the same fingerprinting also to the recorded sample. Each hash generated from the sample sound, will be searched for a match in the database.</p>
+
+<p>If a match is found you will have the time of the hash from the sample (<code class="highlighter-rouge">th1</code>), the time of the hash from the song in the database (<code class="highlighter-rouge">th2</code>) and implicitly the ID of the song for which the hash matched. Basically, <code class="highlighter-rouge">th1</code> is the time since the beginning of the sample until the time of the sample hash and <code class="highlighter-rouge">th2</code> is the time since the beginning of the song and the time of the song hash.</p>
+
+<p>Now, they will draw a new graph called scatter graph. The graph will have on the horizontal axis (X) the time of the song in the database and on the vertical axis (Y) the time of the recorded sample. On the X axis we will mark <code class="highlighter-rouge">th2</code> and on the Y axis we will mark <code class="highlighter-rouge">th1</code>. The point of intersection of the two occurrence times (<code class="highlighter-rouge">th1</code> and <code class="highlighter-rouge">th2</code>) will be marked with a small circle.</p>
+
+<p>The magic happens now: if the graph will contain a lot of pairs of <code class="highlighter-rouge">th1</code>‘s and <code class="highlighter-rouge">th2</code>‘s from the same song, a diagonal line will form. The idea behind the formation of that line is simple: the rate at which the peaks (the small crosses from the simplified spectrogram) in the database song appear will be the same rate in which the peaks appear in the recorded sample, so if you pair these times, the coordinates on the scatter graph will grow constantly (to the right-top of the graph) as the time passes on both axes.</p>
+
+<p>Here is how a scatter graph will look for a non-matching run</p>
+
+<p><img src="/assets/images/shazam/plot_bad.png" alt="Scatter graph of a non-matching run" /></p>
+
+<p>versus how it will look for a matching run</p>
+
+<p><img src="/assets/images/shazam/plot_ok.png" alt="Scatter graph of a matching run" /></p>
+
+<p>Finally, they will calculate a difference between <code class="highlighter-rouge">th2</code> and <code class="highlighter-rouge">th1</code> (<code class="highlighter-rouge">dth</code>) and they will plot it in a <a href="https://en.wikipedia.org/wiki/Histogram">histogram</a>. If there is a match in the graph plotted, then there will be a lot of <code class="highlighter-rouge">dth</code>s with the same value, because, basically, subtracting the <code class="highlighter-rouge">th2</code> from <code class="highlighter-rouge">th1</code> will give the offset from where the sample was recorded (the difference between a point in the original song and the same point in the recorded sample). This will result in a peak within the histogram, which will confirm a match.</p>
+
+<p>Here is how a histogram for a non-matching run will look like</p>
+
+<p><img src="/assets/images/shazam/his_bad.png" alt="Histogram of a non-matching run" /></p>
+
+<p>versus a histogram for a matching run</p>
+
+<p><img src="/assets/images/shazam/his_ok.png" alt="Histogram of a matching run" /></p>
+
+<p>That’s pretty much all the info I could get from the paper. If I missed something or you have other interesting facts about this, tell us in the comments.</p>
+
+<p>Hope it helps 😉</p>
+
+		</section>
+
+		
+
+		<footer class="post-footer">
+			<!-- If we want to display author's name and bio -->
+			
+				<figure class="author-image">
+					<a class="img"
+						href="/about.html"
+						aria-label="About Nicu Surdu"
+						style="background-image: url(/assets/images/profile.jpg)">
+					<span class="hidden">Nicu Surdu's Picture</span></a>
+				</figure>
+				<section class="author">
+					<!-- Author Name -->
+					<div class="post-footer-title">Nicu Surdu</div>
+					<!-- Author Bio -->
+					<p>
+							Technical Lead at <a href="https://www.3pillarglobal.com/">3Pillar Global</a> <br />
+							and co-founder of <a href="http://creativespace.ro/">Creative Space</a>, a cool makerspace in Timișoara, Romania.
+					</p>
+				</section>
+			
+
+			<!-- Share links section -->
+			<section class="share">
+	<div class="post-footer-title">Share this post</div>
+	<a class="icon-twitter"
+		href="http://twitter.com/share?text=How Does Shazam Work ?&amp;url=http://surdu.me/2011/01/20/how-does-shazam-work.html"
+		aria-label="Share on Twitter"
+		onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+	</a>
+	<a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://surdu.me/2011/01/20/how-does-shazam-work.html"
+		aria-label="Share on Facebook"
+		onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+	</a>
+	<a class="icon-google-plus"
+		href="https://plus.google.com/share?url=http://surdu.me/2011/01/20/how-does-shazam-work.html"
+		aria-label="Share on Google+"
+		onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+	</a>
+</section>
+
+		</footer>
+
+		<!-- Disqus comments -->
+		
+				<section class="disqus">
+ <h3>Comments</h3>
+	<div id="disqus_thread"></div>
+	<script>
+		var disqus_config = function () {
+			this.page.url = "http://surdu.me/2011/01/20/how-does-shazam-work.html";
+			this.page.identifier = "/2011/01/20/how-does-shazam-work.html";
+		};
+
+		(function() {
+			var d = document, s = d.createElement('script');
+			s.src = 'https://surdu-me.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+	</script>
+</section>
+
+		
+
+	</article>
+
+</main>
+
+	<footer class="site-footer clearfix" aria-disabled="true">
+		<section class="copyright">
+			<b>Nicu Surdu</b> &copy; 2020
+		</section>
+		<section class="poweredby">
+			<a href="http://github.com/rosario/kasper">Kasper theme</a>
+		</section>
+	</footer>
+
+	<script type="text/javascript" src="/assets/js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+	<script type="text/javascript" src="/assets/js/index.js"></script>
+	<script type="text/javascript" src="/assets/js/gist-embed.js"></script>
+	<script type="text/javascript" src="/assets/js/favicon.js"></script><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-19732240-4"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'UA-19732240-4');
+</script>
+</body>
+</html>

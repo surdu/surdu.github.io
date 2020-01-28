@@ -1,0 +1,9 @@
+{
+	"format": "markdown",
+	"dictionary": [
+		"[A-Z].*",
+		"disqus",
+		"renderer",
+		"renderers"
+	]
+}
