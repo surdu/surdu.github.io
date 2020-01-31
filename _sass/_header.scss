@@ -2,9 +2,9 @@ header.top-header {
 	background-color: #F5F8FA;
 	margin-bottom: 20px;
 	height: 32px;
+	text-align: center;
 
 	.logo {
-		margin-left: 10px;
 		text-decoration: none;
 
 		img {
@@ -13,7 +13,8 @@ header.top-header {
 	}
 
 	nav {
-		float: right;
+		position: absolute;
+		right: 0;
 		font-family: "OpenSans", sans-serif;
 		font-size: 1.5rem;
 

@@ -10,9 +10,13 @@ cover: false
 		{% include pagination.html %}
 	</div>
 
-	<article class="post">
-		<h1 class="post-title">Posts tagged #{{page.tag}}</h1>
-	</article>
+	<div class="post-title">
+		<h1>{{page.tag}}</h1>
+		<div>
+			{{page.tagCount}} posts
+		</div>
+	</div>
+
 
 	{% for post in site.posts %}
 		{% if post.tags contains page.tag %}
