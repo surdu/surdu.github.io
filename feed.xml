@@ -1,14 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<lastBuildDate>Wed, 29 Jan 2020 19:12:40 +0200</lastBuildDate>
+		<lastBuildDate>Tue, 04 Feb 2020 22:16:15 +0200</lastBuildDate>
 		<title></title>
 		<description>Personal blog of Nicu Surdu</description>
 		<link>http://surdu.me//</link>
 		<atom:link href="http://surdu.me//feed.xml" rel="self" type="application/rss+xml"/>
-		<pubDate>Wed, 29 Jan 2020 19:12:40 +0200</pubDate>
-		<lastBuildDate>Wed, 29 Jan 2020 19:12:40 +0200</lastBuildDate>
+		<pubDate>Tue, 04 Feb 2020 22:16:15 +0200</pubDate>
+		<lastBuildDate>Tue, 04 Feb 2020 22:16:15 +0200</lastBuildDate>
 		<generator>Jekyll v4.0.0</generator>
+		
+			<item>
+				<title>Automate Building GitHub Pages That Use Jekyll Plugins</title>
+				<description>&lt;p&gt;As of the writing of this article, this blog’s content is generated using &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; and hosted on &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt;. Until recently all was well: I pushed my code to the &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; branch on my website’s repository and GitHub took care of generating the website for me using Jekyll. All this changed when I started needing to use a custom Jekyll plugin, as GitHub Pages don’t support custom plugins due to security concerns.&lt;/p&gt;
+
+&lt;p&gt;What is needed in order to use GitHub pages with custom plugins is to generate the website locally and then upload the generated content to a special branch on your repository called &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The solution that I’ve implemented involves creating a pre-push git hook that will do the following if it sees a push on the &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; branch:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;build the Jekyll website locally&lt;/li&gt;
+  &lt;li&gt;moves the &lt;code class=&quot;highlighter-rouge&quot;&gt;_site&lt;/code&gt; folder that contains the generated website somewhere outside of the current folder (I choose the parent folder for simplicity)&lt;/li&gt;
+  &lt;li&gt;checkout the &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch and remove everything from the working directory&lt;/li&gt;
+  &lt;li&gt;copy back the content of the &lt;code class=&quot;highlighter-rouge&quot;&gt;_site&lt;/code&gt; folder directly into the current working directory&lt;/li&gt;
+  &lt;li&gt;commit and push the newly copied content on the &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;What we need to do first is to set-up our repository for this purpose.&lt;/p&gt;
+
+&lt;p&gt;First thing that we need to do, is make sure we have the &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch on the repository. To do this, run the following terminal command in your local repository folder:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; gh-pages
+git push origin gh-pages
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you already have the &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt;, just run &lt;code class=&quot;highlighter-rouge&quot;&gt;git checkout gh-pages&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Next, we’ll need to make sure this new branch doesn’t contain anything. This is especially the case when we don’t do this at the inception of the repository and the &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; will basically inherit the content from the branch we made it from.&lt;/p&gt;
+
+&lt;p&gt;To clean the &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-branch&lt;/code&gt;, run the following in the terminal:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout gh-pages
+&lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-rf&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+git add &lt;span class=&quot;nt&quot;&gt;-A&lt;/span&gt;
+git commit &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Initialized gh-pages branch&quot;&lt;/span&gt;
+git push
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now that the &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch contains no file, we’re ready to add the git hook that will take care of generating the content for us.&lt;/p&gt;
+
+&lt;p&gt;First let’s create the git hook file:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;touch&lt;/span&gt; .git/hooks/pre-push
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This will create a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;.git/hooks&lt;/code&gt; folder called pre-push. Open it in your preferred editor and paste in the following content:&lt;/p&gt;
+
+&lt;gist id=&quot;gist-a3224b51c37f6f2b6cf1aeb9fc98bd23&quot; data-file=&quot;pre-push&quot;&gt;&lt;/gist&gt;
+
+&lt;p&gt;Please note the comments in the above code (lines starting with #) which explain what each section of the code does. You should find steps that are listed in the beginning of this article.&lt;/p&gt;
+
+&lt;p&gt;And that’s it! Now, every time you push a commit to the &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; branch, you &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch should be updated with the content of your website.&lt;/p&gt;
+
+&lt;p&gt;Hope this helps! 👍&lt;/p&gt;
+</description>
+				<pubDate>Tue, 04 Feb 2020 00:00:00 +0200</pubDate>
+				<link>http://surdu.me//2020/02/04/jekyll-git-hook.html</link>
+				<guid isPermaLink="true">http://surdu.me//2020/02/04/jekyll-git-hook.html</guid>
+				
+				
+			</item>
 		
 			<item>
 				<title>How to Fix APC Back-UPS ES Constant Beeping Problem</title>

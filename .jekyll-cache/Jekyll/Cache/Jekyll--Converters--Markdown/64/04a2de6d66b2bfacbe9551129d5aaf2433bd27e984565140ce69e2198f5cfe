@@ -1,0 +1,2 @@
+I"<p>As of the writing of this article, this blog’s content is generated using <a href="https://jekyllrb.com/">Jekyll</a> and hosted on <a href="https://pages.github.com/">GitHub Pages</a>. Until recently all was well: I pushed my code to the <code class="highlighter-rouge">master</code> branch on my website’s repository and GitHub took care of generating the website for me using Jekyll. All this changed when I started needing to use a custom Jekyll plugin, as GitHub Pages don’t support custom plugins due to security concerns.</p>
+:ET

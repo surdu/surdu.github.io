@@ -4,6 +4,9 @@
 		"[A-Z].*",
 		"disqus",
 		"renderer",
-		"renderers"
+		"renderers",
+		"shazam",
+		"meta",
+		"apc"
 	]
 }
