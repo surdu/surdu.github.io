@@ -28,7 +28,7 @@ If you already have the `gh-pages`, just run `git checkout gh-pages`.
 
 Next, we'll need to make sure this new branch doesn't contain anything. This is especially the case when we don't do this at the inception of the repository and the `gh-pages` will basically inherit the content from the branch we made it from.
 
-To clean the `gh-branch`, run the following in the terminal:
+To clean the `gh-pages` branch, run the following in the terminal:
 
 ```bash
 git checkout gh-pages
