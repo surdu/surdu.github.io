@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<lastBuildDate>Tue, 04 Feb 2020 22:16:15 +0200</lastBuildDate>
+		<lastBuildDate>Fri, 07 Feb 2020 02:23:26 +0200</lastBuildDate>
 		<title></title>
 		<description>Personal blog of Nicu Surdu</description>
 		<link>http://surdu.me//</link>
 		<atom:link href="http://surdu.me//feed.xml" rel="self" type="application/rss+xml"/>
-		<pubDate>Tue, 04 Feb 2020 22:16:15 +0200</pubDate>
-		<lastBuildDate>Tue, 04 Feb 2020 22:16:15 +0200</lastBuildDate>
+		<pubDate>Fri, 07 Feb 2020 02:23:26 +0200</pubDate>
+		<lastBuildDate>Fri, 07 Feb 2020 02:23:26 +0200</lastBuildDate>
 		<generator>Jekyll v4.0.0</generator>
 		
 			<item>
@@ -38,7 +38,7 @@ git push origin gh-pages
 
 &lt;p&gt;Next, we’ll need to make sure this new branch doesn’t contain anything. This is especially the case when we don’t do this at the inception of the repository and the &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; will basically inherit the content from the branch we made it from.&lt;/p&gt;
 
-&lt;p&gt;To clean the &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-branch&lt;/code&gt;, run the following in the terminal:&lt;/p&gt;
+&lt;p&gt;To clean the &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch, run the following in the terminal:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout gh-pages
 &lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-rf&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
