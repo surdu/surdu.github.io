@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<lastBuildDate>Fri, 07 Feb 2020 02:24:24 +0200</lastBuildDate>
+		<lastBuildDate>Tue, 21 Apr 2020 19:14:57 +0300</lastBuildDate>
 		<title></title>
 		<description>Personal blog of Nicu Surdu</description>
 		<link>http://surdu.me//</link>
 		<atom:link href="http://surdu.me//feed.xml" rel="self" type="application/rss+xml"/>
-		<pubDate>Fri, 07 Feb 2020 02:24:24 +0200</pubDate>
-		<lastBuildDate>Fri, 07 Feb 2020 02:24:24 +0200</lastBuildDate>
+		<pubDate>Tue, 21 Apr 2020 19:14:57 +0300</pubDate>
+		<lastBuildDate>Tue, 21 Apr 2020 19:14:57 +0300</lastBuildDate>
 		<generator>Jekyll v4.0.0</generator>
 		
 			<item>
@@ -209,7 +209,7 @@ git push
 
 &lt;p&gt;And just like that we have our own dynamic DNS system up and running.&lt;/p&gt;
 
-&lt;p&gt;Alternatively to the &lt;code class=&quot;highlighter-rouge&quot;&gt;cron&lt;/code&gt; solution, if you have an Asus router and you can run &lt;a href=&quot;https://www.asuswrt-merlin.net/&quot;&gt;Asuswrt-Merlin firmware&lt;/a&gt; on it, you could set the DNS update script to be executed by the router every time your IP changes. Please see &lt;a href=&quot;https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS&quot;&gt;their docs&lt;/a&gt; and the &lt;a href=&quot;https://github.com/RMerl/asuswrt-merlin/wiki/DDNS-Sample-Scripts#digitalocean&quot;&gt;adaptation of our script&lt;/a&gt; in order to achieve this.&lt;/p&gt;
+&lt;p&gt;Alternatively to the &lt;code class=&quot;highlighter-rouge&quot;&gt;cron&lt;/code&gt; solution, if you have an Asus router and you can run &lt;a href=&quot;https://www.asuswrt-merlin.net/&quot;&gt;Asuswrt-Merlin firmware&lt;/a&gt; on it, you could set the DNS update script to be executed by the router every time your IP changes. Please see &lt;a href=&quot;https://github.com/RMerl/asuswrt-merlin.ng/wiki/Custom-DDNS&quot;&gt;their docs&lt;/a&gt; and the &lt;a href=&quot;https://github.com/RMerl/asuswrt-merlin.ng/wiki/DDNS-Sample-Scripts#digitalocean&quot;&gt;adaptation of our script&lt;/a&gt; in order to achieve this.&lt;/p&gt;
 
 &lt;p&gt;Others routers should support this, so check your router’s manual to see if you can set up a custom dynamic DNS script on your router.&lt;/p&gt;
 
