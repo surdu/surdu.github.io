@@ -126,7 +126,7 @@ Adding the following line in your `crontab` will do just that:
 
 And just like that we have our own dynamic DNS system up and running.
 
-Alternatively to the `cron` solution, if you have an Asus router and you can run [Asuswrt-Merlin firmware](https://www.asuswrt-merlin.net/) on it, you could set the DNS update script to be executed by the router every time your IP changes. Please see [their docs](https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS) and the [adaptation of our script](https://github.com/RMerl/asuswrt-merlin/wiki/DDNS-Sample-Scripts#digitalocean) in order to achieve this.
+Alternatively to the `cron` solution, if you have an Asus router and you can run [Asuswrt-Merlin firmware](https://www.asuswrt-merlin.net/) on it, you could set the DNS update script to be executed by the router every time your IP changes. Please see [their docs](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Custom-DDNS) and the [adaptation of our script](https://github.com/RMerl/asuswrt-merlin.ng/wiki/DDNS-Sample-Scripts#digitalocean) in order to achieve this.
 
 Others routers should support this, so check your router's manual to see if you can set up a custom dynamic DNS script on your router.
 
