@@ -1,0 +1,12 @@
+{
+	"format": "markdown",
+	"dictionary": [
+		"[A-Z].*",
+		"disqus",
+		"renderer",
+		"renderers",
+		"shazam",
+		"meta",
+		"apc"
+	]
+}
