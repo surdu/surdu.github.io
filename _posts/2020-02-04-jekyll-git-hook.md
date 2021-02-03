@@ -17,7 +17,9 @@ The solution that I've implemented involves creating a pre-push git hook that wi
 
 What we need to do first is to set-up our repository for this purpose.
 
-First thing that we need to do, is make sure we have the `gh-pages` branch on the repository. To do this, run the following terminal command in your local repository folder:
+First thing that we need to do is make sure we have Jekyll installed locally. Please check [Jekyll documentation](https://jekyllrb.com/docs/installation/) for that.
+
+Afterwards, we need to make sure we have the `gh-pages` branch on the repository. To do this, run the following terminal command in your local repository folder:
 
 ```bash
 git checkout -b gh-pages
